@@ -1,0 +1,11 @@
+# Example for CODEOWNERS file
+# Define code owners for the project's files, directories, and branches
+
+# For the entire project
+*       @JPC1505 @jtroussard
+
+# For a specific directory
+docs/*  @owner3
+
+# For a specific file
+README.md  @owner4
