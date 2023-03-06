@@ -1,12 +1,17 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, flash
 from config import Config
+
+from forms import LoginForm
 
 app = Flask(__name__)
 app.config.from_object(Config)
 
+app.config['SECRET_KEY'] = 'this-is-a-super-secret-key-wubalubadubdub'
+
 login_name = 'Michael Scott'
 
 @app.route('/')
+@app.route('/home')
 def home():
     return render_template('home.html', active_page='home', login_name=login_name)
 
@@ -14,10 +19,27 @@ def home():
 def tracker():
     return render_template('tracker.html', active_page='tracker', login_name=login_name)
 
-@app.route('/login')
+@app.route('/login', methods=['POST', 'GET'])
 def login():
+    # for now we will redefine login_name here - TODO check login status and set variable as needed
+    login_name = ""
+    form = LoginForm()
+    if form.validate_on_submit():
+        print('-------------')
+        print(form.email.data)
+        print(form.password.data)
+        if form.email.data == 'test@test.com' and form.password.data == 'password':
+            login_name = form.email.data
+            flash('You have been logged in!', 'success')
+            print('we logged in and passed the flash message')
+            return redirect(url_for('home'))
+        else:
+            print('WRONG')
+            flash('Login Unsuccessful. Please check username and password', 'danger')
+            print('Flash message:', flash.get_messages())
+
     # do things to log in the user
-    return render_template('login.html', active_page='login', login_name=login_name)
+    return render_template('login.html', active_page='login', login_name=login_name, form=form)
 
 @app.route('/logout')
 def logout():
