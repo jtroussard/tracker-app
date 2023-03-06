@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block styles %}
+<style>
+    /* Style for active page */
+    .nav-item.active {
+      font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+  <h1>Login!</h1>
+  <p>Welcome to Weight Tracker 2</p>
+  <p>Click <a href="{{ url_for('logout') }}">here</a> to test the logout route.</p>
+{% endblock %}
