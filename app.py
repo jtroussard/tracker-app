@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, flash
 from config import Config
 
-from forms import LoginForm
+from forms import LoginForm, RegistrationForm
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -41,8 +41,8 @@ def logout():
 
 @app.route('/register')
 def register():
-    # do things to register a new user
-    return render_template('register.html', active_page='register', login_name=login_name)
+    form = RegistrationForm()
+    return render_template('register.html', active_page='register', login_name=login_name, form=form)
 
 if __name__ == '__main__':
     app.run()
