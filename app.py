@@ -25,20 +25,12 @@ def login():
     login_name = ""
     form = LoginForm()
     if form.validate_on_submit():
-        print('-------------')
-        print(form.email.data)
-        print(form.password.data)
         if form.email.data == 'test@test.com' and form.password.data == 'password':
             login_name = form.email.data
             flash('You have been logged in!', 'success')
-            print('we logged in and passed the flash message')
             return redirect(url_for('home'))
         else:
-            print('WRONG')
             flash('Login Unsuccessful. Please check username and password', 'danger')
-            print('Flash message:', flash.get_messages())
-
-    # do things to log in the user
     return render_template('login.html', active_page='login', login_name=login_name, form=form)
 
 @app.route('/logout')
