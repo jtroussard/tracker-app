@@ -2,7 +2,8 @@ from flask import Flask, render_template, redirect, url_for, flash
 from config import Config
 import sys
 
-from forms import LoginForm, RegistrationForm
+from forms import LoginForm, RegistrationForm, TrackerEntryForm
+from datetime import date
 
 from utils.helpers import clear_form
 
@@ -13,6 +14,35 @@ app.config["SECRET_KEY"] = "this-is-a-super-secret-key-wubalubadubdub"
 
 login_name = "Michael Scott"
 
+test_entries = [
+    {
+        'date': date(2022, 1, 1),
+        'time_of_day': 'morning',
+        'mood': 'happy',
+        'status': 'good',
+        'weight': 150.5,
+        'measurement_waist': 28.5,
+        'keto': 4
+    },
+    {
+        'date': date(2022, 1, 2),
+        'time_of_day': 'afternoon',
+        'mood': 'tired',
+        'status': 'okay',
+        'weight': 148.8,
+        'measurement_waist': 28.0,
+        'keto': 3
+    },
+    {
+        'date': date(2022, 1, 3),
+        'time_of_day': 'evening',
+        'mood': 'grumpy',
+        'status': 'bad',
+        'weight': 151.2,
+        'measurement_waist': 29.0,
+        'keto': 2
+    }
+]
 
 @app.route("/")
 @app.route("/home")
@@ -20,9 +50,21 @@ def home():
     return render_template("home.html", active_page="home", login_name=login_name)
 
 
-@app.route("/tracker")
+@app.route("/tracker", methods=['GET', 'POST'])
 def tracker():
-    return render_template("tracker.html", active_page="tracker", login_name=login_name)
+    form = TrackerEntryForm()
+    if form.validate_on_submit():
+        date = form.date.data
+        time_of_day = form.time_of_day.data 
+        mood = form.mood.data 
+        status = form.status.data 
+        weight = form.weight.data 
+        measurement_waist = form.measurement_waist.data 
+        keto = form.keto.data
+        print('success')
+        flash(f"You have submitted an entry", "success")
+        return render_template("tracker.html", active_page="tracker", login_name=login_name, entries=test_entries, form=form)
+    return render_template("tracker.html", active_page="tracker", login_name=login_name, entries=test_entries, form=form)
 
 
 @app.route("/login", methods=["POST", "GET"])
