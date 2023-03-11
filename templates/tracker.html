@@ -2,14 +2,118 @@
 
 {% block styles %}
 <style>
-    /* Style for active page */
-    .nav-item.active {
-      font-weight: bold;
-    }
+  /* Style for active page */
+  .nav-item.active {
+    font-weight: bold;
+  }
+
+  /* Card Styling */
+  .card {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    transform: translateY(-5px);
+  }
+
+  /* Button Styling */
+  button label {
+    margin: 0;
+  }
 </style>
 {% endblock %}
 
 {% block content %}
-  <h1>Tracker Page!</h1>
-  <p>Welcome to Weight Tracker 2</p>
+<div class="container-fluid mt-3">
+  <div class="row">
+    <div class="col-md-8">
+      <form method="POST" action="{{ url_for('tracker') }}">
+        {{ form.csrf_token }}
+        <div class="form-group">
+          <label for="{{ form.date.id }}" class="form-label">Date</label>
+          {{ form.date(class="form-control form-control-lg") }}
+        </div>
+        {% for error in form.date.errors %}
+        <div class="alert alert-danger">
+          {{ error }}
+        </div>
+        {% endfor %}
+        <div class="form-group">
+          <label for="{{ form.time_of_day.id }}" class="form-label">Time of Day</label>
+          {{ form.time_of_day(class="form-control form-control-lg") }}
+        </div>
+        {% for error in form.time_of_day.errors %}
+        <div class="alert alert-danger">
+          {{ error }}
+        </div>
+        {% endfor %}
+        <div class="form-group">
+          <label for="{{ form.mood.id }}" class="form-label">Mood</label>
+          {{ form.mood(class="form-control form-control-lg") }}
+        </div>
+        {% for error in form.mood.errors %}
+        <div class="alert alert-danger">
+          {{ error }}
+        </div>
+        {% endfor %}
+        <div class="form-group">
+          <label for="{{ form.status.id }}" class="form-label">Status</label>
+          {{ form.status(class="form-control form-control-lg") }}
+        </div>
+        {% for error in form.status.errors %}
+        <div class="alert alert-danger">
+          {{ error }}
+        </div>
+        {% endfor %}
+        <div class="form-group">
+          <label for="{{ form.weight.id }}" class="form-label">{{ form.weight.label }}</label>
+          {{ form.weight(class="form-control form-control-lg") }}
+        </div>
+        {% for error in form.weight.errors %}
+        <div class="alert alert-danger">
+          WEIGHT {{ error }} {{ form.weight.data }}
+        </div>
+        {% endfor %}
+        <div class="form-group">
+          <label for="{{ form.measurement_waist.id }}" class="form-label">Waist Measurement</label>
+          {{ form.measurement_waist(class="form-control form-control-lg") }}
+        </div>
+        {% for error in form.measurement_waist.errors %}
+        <div class="alert alert-danger">
+          {{ error }}
+        </div>
+        {% endfor %}
+        <div class="form-group">
+          <label for="{{ form.keto.id }}" class="form-label">Ketosis Level</label>
+          {{ form.keto(class="form-control form-control-lg") }}
+        </div>
+        {% for error in form.keto.errors %}
+        <div class="alert alert-danger">
+          {{ error }}
+        </div>
+        {% endfor %}
+        {{ form.submit(class="btn btn-outline-info") }}
+      </form>
+    </div>
+    <div class="col-md-4">
+      <div class="d-flex flex-column">
+        {% for entry in entries %}
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">{{ entry.date }}</h5>
+            <p class="card-text">Time of Day: {{ entry.time_of_day }}</p>
+            <p class="card-text">Mood: {{ entry.mood }}</p>
+            <p class="card-text">Status: {{ entry.status }}</p>
+            <p class="card-text">Weight: {{ entry.weight }}</p>
+            <p class="card-text">Waist Measurement: {{ entry.measurement_waist }}</p>
+            <p class="card-text">Ketosis Level: {{ entry.keto }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
