@@ -17,62 +17,68 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
 
 db.init_app(app)
 
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+    image_file = db.Column(db.String(20), nullable=False, default="default.jpg")
     password = db.Column(db.String(60), nullable=False)
-    entry = db.relationship('TrackerEntry', backref='author', lazy='select')
+    entry = db.relationship("TrackerEntry", backref="author", lazy="select")
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
+
 class TrackerEntry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow) # pass the function not the return value
+    date = db.Column(
+        db.DateTime, nullable=False, default=datetime.utcnow
+    )  # pass the function not the return value
     time_of_day = db.Column(db.String(20))
     mood = db.Column(db.String(20))
     status = db.Column(db.String(20))
     weight = db.Column(db.Float(), nullable=False)
     measurement_waist = db.Column(db.Float())
     keto = db.Column(db.Integer)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
     def __repr__(self):
         return f"TrackerEntry('{self.date}', '{self.weight}')"
+
 
 login_name = "Michael Scott"
 
 test_entries = [
     {
-        'date': date(2022, 1, 1),
-        'time_of_day': 'morning',
-        'mood': 'happy',
-        'status': 'good',
-        'weight': 150.5,
-        'measurement_waist': 28.5,
-        'keto': 4
+        "date": date(2022, 1, 1),
+        "time_of_day": "morning",
+        "mood": "happy",
+        "status": "good",
+        "weight": 150.5,
+        "measurement_waist": 28.5,
+        "keto": 4,
     },
     {
-        'date': date(2022, 1, 2),
-        'time_of_day': 'afternoon',
-        'mood': 'tired',
-        'status': 'okay',
-        'weight': 148.8,
-        'measurement_waist': 28.0,
-        'keto': 3
+        "date": date(2022, 1, 2),
+        "time_of_day": "afternoon",
+        "mood": "tired",
+        "status": "okay",
+        "weight": 148.8,
+        "measurement_waist": 28.0,
+        "keto": 3,
     },
     {
-        'date': date(2022, 1, 3),
-        'time_of_day': 'evening',
-        'mood': 'grumpy',
-        'status': 'bad',
-        'weight': 151.2,
-        'measurement_waist': 29.0,
-        'keto': 2
-    }
+        "date": date(2022, 1, 3),
+        "time_of_day": "evening",
+        "mood": "grumpy",
+        "status": "bad",
+        "weight": 151.2,
+        "measurement_waist": 29.0,
+        "keto": 2,
+    },
 ]
+
 
 @app.route("/")
 @app.route("/home")
@@ -80,21 +86,33 @@ def home():
     return render_template("home.html", active_page="home", login_name=login_name)
 
 
-@app.route("/tracker", methods=['GET', 'POST'])
+@app.route("/tracker", methods=["GET", "POST"])
 def tracker():
     form = TrackerEntryForm()
     if form.validate_on_submit():
         date = form.date.data
-        time_of_day = form.time_of_day.data 
-        mood = form.mood.data 
-        status = form.status.data 
-        weight = form.weight.data 
-        measurement_waist = form.measurement_waist.data 
+        time_of_day = form.time_of_day.data
+        mood = form.mood.data
+        status = form.status.data
+        weight = form.weight.data
+        measurement_waist = form.measurement_waist.data
         keto = form.keto.data
-        print('success')
+        print("success")
         flash(f"You have submitted an entry", "success")
-        return render_template("tracker.html", active_page="tracker", login_name=login_name, entries=test_entries, form=form)
-    return render_template("tracker.html", active_page="tracker", login_name=login_name, entries=test_entries, form=form)
+        return render_template(
+            "tracker.html",
+            active_page="tracker",
+            login_name=login_name,
+            entries=test_entries,
+            form=form,
+        )
+    return render_template(
+        "tracker.html",
+        active_page="tracker",
+        login_name=login_name,
+        entries=test_entries,
+        form=form,
+    )
 
 
 @app.route("/login", methods=["POST", "GET"])
