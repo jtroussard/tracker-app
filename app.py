@@ -1,16 +1,46 @@
 from flask import Flask, render_template, redirect, url_for, flash
+from flask_sqlalchemy import SQLAlchemy
 from config import Config
 import sys
 
 from forms import LoginForm, RegistrationForm, TrackerEntryForm
-from datetime import date
+from datetime import date, datetime
 
 from utils.helpers import clear_form
 
+db = SQLAlchemy()
+
 app = Flask(__name__)
 app.config.from_object(Config)
-
 app.config["SECRET_KEY"] = "this-is-a-super-secret-key-wubalubadubdub"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
+
+db.init_app(app)
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+    password = db.Column(db.String(60), nullable=False)
+    entry = db.relationship('TrackerEntry', backref='author', lazy='select')
+
+    def __repr__(self):
+        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+
+class TrackerEntry(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow) # pass the function not the return value
+    time_of_day = db.Column(db.String(20))
+    mood = db.Column(db.String(20))
+    status = db.Column(db.String(20))
+    weight = db.Column(db.Float(), nullable=False)
+    measurement_waist = db.Column(db.Float())
+    keto = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"TrackerEntry('{self.date}', '{self.weight}')"
 
 login_name = "Michael Scott"
 
