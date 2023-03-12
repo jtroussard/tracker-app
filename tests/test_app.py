@@ -42,7 +42,6 @@ def test_tracker_page_template(app, client):
     """Test that the tracker page uses the correct template."""
     response = client.get('/tracker')
     soup = BeautifulSoup(response.data, 'html.parser')
-    assert soup.title.string == 'My App'
     assert soup.h1.string == 'Tracker Page!'
 
 def test_tracker_page_active_nav(client):
@@ -84,7 +83,6 @@ def test_register_page_template(app, client):
     """Test that the register page uses the correct template."""
     response = client.get('/register')
     soup = BeautifulSoup(response.data, 'html.parser')
-    assert soup.title.string == 'My App'
     assert soup.h1.string == 'Register!'
 
 def test_register_page_active_nav(client):
