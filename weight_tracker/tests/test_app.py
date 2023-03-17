@@ -1,6 +1,6 @@
 from flask import url_for
 from bs4 import BeautifulSoup
-from app import app
+from run import app
 
 
 def test_app_name(client):

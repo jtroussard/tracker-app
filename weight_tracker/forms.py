@@ -10,11 +10,10 @@ from wtforms import (
     IntegerField,
 )
 from wtforms.validators import InputRequired, Length, Email, EqualTo
-from choices import TIME_OF_DAY_CHOICES, MOOD_CHOICES, STATUS_CHOICES
-from validators import validate_weight
+from weight_tracker.constants.choices import TIME_OF_DAY_CHOICES, MOOD_CHOICES, STATUS_CHOICES
+from weight_tracker.utils.validators import validate_weight
 
 import datetime
-
 
 class RegistrationForm(FlaskForm):
     username = StringField(
