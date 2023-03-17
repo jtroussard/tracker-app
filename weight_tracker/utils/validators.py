@@ -1,4 +1,5 @@
 from wtforms.validators import ValidationError
+from weight_tracker.models import User
 
 
 def validate_weight2(form, field):
@@ -12,6 +13,15 @@ def validate_weight2(form, field):
                 "Weight must be less than or equal to 999 and have only one decimal place"
             )
 
+def validate_username(form, username):
+    user = User.query.filter_by(username=username.data).first()
+    if user:
+        raise ValidationError('That username is already in use. Please choose another.')
+
+def validate_email(form, email):
+    user = User.query.filter_by(email=email.data).first()
+    if user:
+        raise ValidationError('That email is already in use. Please choose another.')
 
 def validate_weight(form, field):
     if field.data is not None:

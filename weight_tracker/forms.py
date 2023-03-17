@@ -11,15 +11,15 @@ from wtforms import (
 )
 from wtforms.validators import InputRequired, Length, Email, EqualTo
 from weight_tracker.constants.choices import TIME_OF_DAY_CHOICES, MOOD_CHOICES, STATUS_CHOICES
-from weight_tracker.utils.validators import validate_weight
+from weight_tracker.utils.validators import validate_weight, validate_username, validate_email
 
 import datetime
 
 class RegistrationForm(FlaskForm):
     username = StringField(
-        "Username", validators=[InputRequired(), Length(min=2, max=20)]
+        "Username", validators=[InputRequired(), Length(min=2, max=20), validate_username]
     )
-    email = StringField("Email", validators=[InputRequired(), Email()])
+    email = StringField("Email", validators=[InputRequired(), Email(), validate_email])
     password = PasswordField("Password", validators=[InputRequired()])
     confirm_password = PasswordField(
         "Confirm Password", validators=[InputRequired(), EqualTo("password")]

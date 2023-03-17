@@ -1,10 +1,14 @@
 # pylint: disable=too-few-public-methods
 
 from datetime import datetime
-from weight_tracker import db
+from weight_tracker import db, login_manager
+from flask_login import UserMixin # For common attributes/methods for User
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     """A class representing a user.
 
     Args:
