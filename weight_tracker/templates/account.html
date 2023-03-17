@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block styles %}
+<style>
+.circle-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-3">
+    <h1>User Account</h1>
+    <h2>Welcome, {{ user.username }}!</h2>
+    <img src="{{ url_for('static', filename=user.image_file) }}" class="circle-img" alt="Profile Picture">
+    <ul>
+        <li><strong>ID:</strong> {{ user.id }}</li>
+        <li><strong>Username:</strong> {{ user.username }}</li>
+        <li><strong>Email:</strong> {{ user.email }}</li>
+        <li><strong>Entry:</strong> {{ user.entry }}</li>
+    </ul>
+</div>
+{% endblock %}

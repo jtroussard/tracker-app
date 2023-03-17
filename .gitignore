@@ -1,5 +1,7 @@
 # Custom Ignores
 # cheater_scripts.txt
+.DS_Store
+weight_tracker/.DS_Store
 
 # IDE
 .vscode/

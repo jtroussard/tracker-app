@@ -2,12 +2,12 @@ import sys
 from datetime import date
 
 from flask import render_template, redirect, url_for, flash
+from flask_login import login_user, current_user, logout_user
 from weight_tracker import app, db, bcrypt
 from weight_tracker.forms import LoginForm, RegistrationForm, TrackerEntryForm
 from weight_tracker.utils.helpers import clear_form
 from weight_tracker.models import User
 
-LOGIN_NAME = "Michael Scott"
 TEST_ENTRIES = [
     {
         "date": date(2022, 1, 1),
@@ -44,10 +44,10 @@ TEST_ENTRIES = [
 def home():
     """
     The function home() returns the rendered template "home.html" with the
-    variables active_page and LOGIN_NAME
+    variables active_page and 
     :return: The home.html file is being returned.
     """
-    return render_template("home.html", active_page="home", login_name=LOGIN_NAME)
+    return render_template("home.html", active_page="home")
 
 
 @app.route("/tracker", methods=["GET", "POST"])
@@ -56,6 +56,7 @@ def tracker():
     The function tracker() is called when the user visits the /tracker route.
     :return: The tracker page is being returned.
     """
+    print(current_user.is_authenticated)
     form = TrackerEntryForm()
     if form.validate_on_submit():
         date = form.date.data
@@ -73,14 +74,12 @@ def tracker():
         return render_template(
             "tracker.html",
             active_page="tracker",
-            login_name=LOGIN_NAME,
             entries=TEST_ENTRIES,
             form=form,
         )
     return render_template(
         "tracker.html",
         active_page="tracker",
-        login_name=LOGIN_NAME,
         entries=TEST_ENTRIES,
         form=form,
     )
@@ -93,28 +92,35 @@ def login():
     user is logged in and redirected to the tracker page
     :return: The login.html template is being returned.
     """
-    # for now we will redefine login_name here - TODO check login status and set variable as needed
+    if current_user.is_authenticated:
+        print(vars(current_user))
+        return redirect(url_for("home"))
+    # for now we will redefine  here - TODO check login status and set variable as needed
     name = ""
     form = LoginForm()
     if form.validate_on_submit():
-        if form.email.data == "test@test.com" and form.password.data == "password":
-            name = form.email.data
-            flash("You have been logged in!", "success")
-            return redirect(url_for("tracker"))
-        flash("Login Unsuccessful. Please check username and password", "danger")
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember.data)
+            flash("Login Successful", "success")
+            return redirect(url_for("home"))
+        else:
+            flash("Login Unsuccessful. Please check username and password", "danger")
     return render_template(
-        "login.html", active_page="login", login_name=name, form=form
+        "login.html", active_page="login", form=form
     )
 
 
 @app.route("/logout")
 def logout():
     """
-    Not implemented yet.
-    :return: a redirect to the home page.
+    The function logout() is called when the user clicks the logout button. The function logout_user()
+    is called from the Flask-Login library. The function redirect() is called from the Flask library.
+    The function url_for() is called from the Flask library
+    :return: the redirect function, which is redirecting the user to the home page.
     """
-    # do things to log out the user
-    print("user logged out")
+    logout_user()
+    print("log this: user logged out")
     return redirect(url_for("home"))
 
 
@@ -127,6 +133,8 @@ def register():
     redirects the user to the login page.
     :return: the rendered template for the register page.
     """
+    if current_user.is_authenticated:
+        return redirect(url_for("home"))
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_pw = bcrypt.generate_password_hash(form.password.data).decode("utf8")
@@ -136,9 +144,9 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         flash("Your tracker account has been created. You may now login.", "success")
-        return redirect(url_for("login", login_name="whoami"))
+        return redirect(url_for("login"))
     return render_template(
-        "register.html", active_page="register", login_name=LOGIN_NAME, form=form
+        "register.html", active_page="register", form=form
     )
 
 
@@ -175,3 +183,11 @@ def clear_form_route(form_name):
     clear_form(form)
     flash("Form cleared", "info")
     return redirect(url_for("register"))
+
+@app.route("/account", methods=["GET"])
+def account():
+    print(current_user)
+    print('----------')
+    if current_user.is_authenticated:
+        return render_template("account.html", active_page="account", user=current_user)
+    return redirect(url_for("login.html "))
