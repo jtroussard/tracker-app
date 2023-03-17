@@ -3,14 +3,33 @@
 from datetime import datetime
 from weight_tracker import db
 
+
 class User(db.Model):
-    """The User class is a model that will be stored in a table called users.
-    The table will have columns for id, username, email, image_file, and
-    password. The id column will be the primary key, and the username and email
-    columns will be unique. The image_file column will have a default value of
-    default.jpg. The password column will be hashed using the
-    werkzeug.security.generate_password_hash() function
+    """A class representing a user.
+
+    Args:
+        id (int): The user's ID.
+        username (str): The user's username, unique and non-null.
+        email (str): The user's email address, unique and non-null.
+        image_file (str): The name of the user's profile image file, non-null
+            with a default value of 'default.jpg'.
+        password (str): The user's password, non-null.
+        entry (list): A list of the user's tracker entries.
+
+    Attributes:
+        id (int): The user's ID.
+        username (str): The user's username, unique and non-null.
+        email (str): The user's email address, unique and non-null.
+        image_file (str): The name of the user's profile image file, non-null
+            with a default value of 'default.jpg'.
+        password (str): The user's password, non-null.
+        entry (list): A list of the user's tracker entries.
+
+    Methods:
+        __repr__(self): Returns a string representation of the User object.
+
     """
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -32,6 +51,7 @@ class TrackerEntry(db.Model):
     tracker. It has a date, time of day, mood, status, weight,
     measurement_waist, keto, and user_id
     """
+
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(
         db.DateTime, nullable=False, default=datetime.utcnow
