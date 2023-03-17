@@ -2,9 +2,10 @@ import sys
 from datetime import date
 
 from flask import render_template, redirect, url_for, flash
-from weight_tracker import app
+from weight_tracker import app, db, bcrypt
 from weight_tracker.forms import LoginForm, RegistrationForm, TrackerEntryForm
 from weight_tracker.utils.helpers import clear_form
+from weight_tracker.models import User
 
 LOGIN_NAME = "Michael Scott"
 TEST_ENTRIES = [
@@ -64,7 +65,10 @@ def tracker():
         weight = form.weight.data
         measurement_waist = form.measurement_waist.data
         keto = form.keto.data
-        print(f"success: {date}, {time_of_day}, {mood}, {status}, {weight}, {measurement_waist}, {keto}")
+        print(
+            f"success: {date}, {time_of_day}, {mood}, {status}, {weight},\
+                {measurement_waist}, {keto}"
+        )
         flash("You have submitted an entry", "success")
         return render_template(
             "tracker.html",
@@ -117,17 +121,22 @@ def logout():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """
-    If the form is valid, set the global variable `LOGIN_NAME` to the username
-    entered in the form, flash a success message, and redirect to the tracker
-    page. Otherwise, render the register page with the form.
+    The function takes in a form object, validates the form, hashes the
+    password, creates a new user object, adds the new user to the database,
+    commits the changes to the database, flashes a message to the user, and
+    redirects the user to the login page.
     :return: the rendered template for the register page.
     """
-    global LOGIN_NAME
     form = RegistrationForm()
     if form.validate_on_submit():
-        LOGIN_NAME = form.data["username"]
-        flash("You have been registered!", "success")
-        return redirect(url_for("tracker", login_name=LOGIN_NAME))
+        hashed_pw = bcrypt.generate_password_hash(form.password.data).decode("utf8")
+        new_user = User(
+            username=form.username.data, email=form.email.data, password=hashed_pw
+        )
+        db.session.add(new_user)
+        db.session.commit()
+        flash("Your tracker account has been created. You may now login.", "success")
+        return redirect(url_for("login", login_name="whoami"))
     return render_template(
         "register.html", active_page="register", login_name=LOGIN_NAME, form=form
     )
