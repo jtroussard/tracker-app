@@ -1,5 +1,5 @@
 # from flask import flash
-
+import copy
 
 def clear_form(form):
     """
@@ -7,7 +7,6 @@ def clear_form(form):
     """
     # form.process(data=None)
     print("clearing fields")
-
 
 # IMPLEMENT THIS LATER
 # def flash_errors(form):

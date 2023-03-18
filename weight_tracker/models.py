@@ -40,6 +40,7 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=False, default="default.jpg")
     password = db.Column(db.String(60), nullable=False)
     entry = db.relationship("TrackerEntry", backref="author", lazy="select")
+    active_record = db.Column(db.Boolean(), nullable=False, default=True)
 
     def __repr__(self):
         """
@@ -67,11 +68,10 @@ class TrackerEntry(db.Model):
     measurement_waist = db.Column(db.Float())
     keto = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    active_record = db.Column(db.Boolean(), nullable=False, default=True)
 
     def __repr__(self):
         """
-        `__repr__` is a special function that returns a string representation of
-        the object
         :return: The date and weight of the entry.
         """
         return f"TrackerEntry('{self.date}', '{self.weight}')"
