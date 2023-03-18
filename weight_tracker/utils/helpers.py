@@ -1,5 +1,4 @@
 # from flask import flash
-import copy
 
 def clear_form(form):
     """

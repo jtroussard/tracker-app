@@ -8,37 +8,6 @@ from weight_tracker.forms import LoginForm, RegistrationForm, TrackerEntryForm
 from weight_tracker.utils.helpers import clear_form
 from weight_tracker.models import User, TrackerEntry
 
-TEST_ENTRIES = [
-    {
-        "date": date(2022, 1, 1),
-        "time_of_day": "morning",
-        "mood": "happy",
-        "status": "good",
-        "weight": 150.5,
-        "measurement_waist": 28.5,
-        "keto": 4,
-    },
-    {
-        "date": date(2022, 1, 2),
-        "time_of_day": "afternoon",
-        "mood": "tired",
-        "status": "okay",
-        "weight": 148.8,
-        "measurement_waist": 28.0,
-        "keto": 3,
-    },
-    {
-        "date": date(2022, 1, 3),
-        "time_of_day": "evening",
-        "mood": "grumpy",
-        "status": "bad",
-        "weight": 151.2,
-        "measurement_waist": 29.0,
-        "keto": 2,
-    },
-]
-
-
 @app.route("/")
 @app.route("/home")
 def home():
