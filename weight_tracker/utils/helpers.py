@@ -1,13 +1,11 @@
 # from flask import flash
 
-
 def clear_form(form):
     """
     Clears all fields in the given form.
     """
     # form.process(data=None)
     print("clearing fields")
-
 
 # IMPLEMENT THIS LATER
 # def flash_errors(form):

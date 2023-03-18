@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+
+{% block styles %}
+<style>
+    /* Style for active page */
+    .nav-item.active {
+        font-weight: bold;
+    }
+
+    /* Card Styling */
+    .card {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .card:hover {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+        transform: translateY(-5px);
+    }
+
+    /* Button Styling */
+    button label {
+        margin: 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex flex-column">
+                <div class="card mb-12">
+                    <div class="card-body">
+                        <h5 class="card-title">Entry Dated: {{ entry.date.date() }} @ {{ entry.time_of_day }}</h5>
+                        <p class="card-text">Mood: {{ entry.mood }}</p>
+                        <p class="card-text">Status: {{ entry.status }}</p>
+                        <p class="card-text">Weight: {{ entry.weight }}</p>
+                        <p class="card-text">Waist Measurement: {{ entry.measurement_waist }}</p>
+                        <p class="card-text">Ketosis Level: {{ entry.keto }}</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <div class="d-flex">
+                            <button type="button" class="btn btn-secondary mr-2" disabled>Previous</button>
+                            <button type="button" class="btn btn-secondary" disabled>Next</button>
+                        </div>
+                        <div class="d-flex">
+                            <a class="btn btn-primary ml-auto mr-2"
+                                href="{{ url_for('update_entry', entry_id=entry.id, entry=entry) }}">Edit</a>
+                            <form method="post" action="{{ url_for('delete_entry', entry_id=entry.id) }}">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
