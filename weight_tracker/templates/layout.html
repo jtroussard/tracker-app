@@ -37,6 +37,9 @@
         <li class="class=nav-item {% if active_page == 'account' %}active{% endif %}">
           <a class="nav-link" href="/account">Account</a>
         </li>
+        <li class="class=nav-item {% if active_page == 'tracker' %}active{% endif %}">
+          <a class="nav-link" href="/tracker">Tracker</a>
+        </li>
         {% else %}
         <li class="class=nav-item {% if active_page == 'login' %}active{% endif %}">
           <a class="nav-link" href="/login">Login</a>
@@ -45,9 +48,6 @@
           <a class="nav-link" href="/register">Register</a>
         </li>
         {% endif %}
-        <li class="class=nav-item {% if active_page == 'tracker' %}active{% endif %}">
-          <a class="nav-link" href="/tracker">Tracker</a>
-        </li>
       </ul>
       {% if current_user.is_authenticated %}
       <div class="d-flex align-items-center">

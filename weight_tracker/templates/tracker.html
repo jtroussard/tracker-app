@@ -103,7 +103,7 @@
         {% for entry in entries %}
         <div class="card mb-3">
           <div class="card-body">
-            <h5 class="card-title">{{ entry.date }}</h5>
+            <h5 class="card-title">{{ entry.date.date() }}</h5>
             <p class="card-text">Time of Day: {{ entry.time_of_day }}</p>
             <p class="card-text">Mood: {{ entry.mood }}</p>
             <p class="card-text">Status: {{ entry.status }}</p>

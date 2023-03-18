@@ -2,11 +2,11 @@ import sys
 from datetime import date
 
 from flask import render_template, redirect, url_for, flash
-from flask_login import login_user, current_user, logout_user
+from flask_login import login_required, login_user, current_user, logout_user
 from weight_tracker import app, db, bcrypt
 from weight_tracker.forms import LoginForm, RegistrationForm, TrackerEntryForm
 from weight_tracker.utils.helpers import clear_form
-from weight_tracker.models import User
+from weight_tracker.models import User, TrackerEntry
 
 TEST_ENTRIES = [
     {
@@ -44,45 +44,44 @@ TEST_ENTRIES = [
 def home():
     """
     The function home() returns the rendered template "home.html" with the
-    variables active_page and 
+    variables active_page and
     :return: The home.html file is being returned.
     """
     return render_template("home.html", active_page="home")
 
 
 @app.route("/tracker", methods=["GET", "POST"])
+@login_required
 def tracker():
     """
     The function tracker() is called when the user visits the /tracker route.
     :return: The tracker page is being returned.
     """
-    print(current_user.is_authenticated)
-    form = TrackerEntryForm()
-    if form.validate_on_submit():
-        date = form.date.data
-        time_of_day = form.time_of_day.data
-        mood = form.mood.data
-        status = form.status.data
-        weight = form.weight.data
-        measurement_waist = form.measurement_waist.data
-        keto = form.keto.data
-        print(
-            f"success: {date}, {time_of_day}, {mood}, {status}, {weight},\
-                {measurement_waist}, {keto}"
-        )
-        flash("You have submitted an entry", "success")
+    if current_user.is_authenticated:
+        entries = TrackerEntry.query.filter_by(user_id=current_user.id).all()
+        form = TrackerEntryForm()
+        if form.validate_on_submit():
+            entry = TrackerEntry(
+                date=form.date.data,
+                time_of_day=form.time_of_day.data,
+                mood=form.mood.data,
+                status=form.status.data,
+                weight=form.weight.data,
+                measurement_waist=form.measurement_waist.data,
+                keto=form.keto.data,
+                user_id=current_user.id,
+            )
+            db.session.add(entry)
+            db.session.commit()
+            flash(f"You have submitted entry: {entry}", "success")
+            return redirect(url_for("tracker"))
         return render_template(
-            "tracker.html",
-            active_page="tracker",
-            entries=TEST_ENTRIES,
-            form=form,
-        )
-    return render_template(
-        "tracker.html",
-        active_page="tracker",
-        entries=TEST_ENTRIES,
-        form=form,
-    )
+                "tracker.html",
+                active_page="tracker",
+                entries=entries,
+                form=form,
+            )
+    return redirect(url_for("home"))
 
 
 @app.route("/login", methods=["POST", "GET"])
@@ -100,15 +99,18 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
+        if user and bcrypt.check_password_hash(
+            user.password, form.password.data
+        ):
             login_user(user, remember=form.remember.data)
             flash("Login Successful", "success")
             return redirect(url_for("home"))
         else:
-            flash("Login Unsuccessful. Please check username and password", "danger")
-    return render_template(
-        "login.html", active_page="login", form=form
-    )
+            flash(
+                "Login Unsuccessful. Please check username and password",
+                "danger",
+            )
+    return render_template("login.html", active_page="login", form=form)
 
 
 @app.route("/logout")
@@ -131,23 +133,37 @@ def register():
     password, creates a new user object, adds the new user to the database,
     commits the changes to the database, flashes a message to the user, and
     redirects the user to the login page.
+
+    Bugs: Experienced a bug where after registering, user was automatically
+    logged in, instead of being redircted to the login in page. I think what
+    might of happened has to do with cache. I was logged in with a user, deleted
+    the database file. used a create_all(), then opened an icognito window, then
+    registered with the same username/credentials as the user I was previously
+    logged in with. Check on this later. For now will add logout() before
+    redirect for safety.
     :return: the rendered template for the register page.
     """
     if current_user.is_authenticated:
         return redirect(url_for("home"))
     form = RegistrationForm()
     if form.validate_on_submit():
-        hashed_pw = bcrypt.generate_password_hash(form.password.data).decode("utf8")
+        hashed_pw = bcrypt.generate_password_hash(form.password.data).decode(
+            "utf8"
+        )
         new_user = User(
-            username=form.username.data, email=form.email.data, password=hashed_pw
+            username=form.username.data,
+            email=form.email.data,
+            password=hashed_pw,
         )
         db.session.add(new_user)
         db.session.commit()
-        flash("Your tracker account has been created. You may now login.", "success")
+        logout_user()
+        flash(
+            "Your tracker account has been created. You may now login.",
+            "success",
+        )
         return redirect(url_for("login"))
-    return render_template(
-        "register.html", active_page="register", form=form
-    )
+    return render_template("register.html", active_page="register", form=form)
 
 
 @app.route("/clear_form/<form_name>", methods=["POST"])
@@ -184,10 +200,11 @@ def clear_form_route(form_name):
     flash("Form cleared", "info")
     return redirect(url_for("register"))
 
+
 @app.route("/account", methods=["GET"])
 def account():
-    print(current_user)
-    print('----------')
     if current_user.is_authenticated:
-        return render_template("account.html", active_page="account", user=current_user)
+        return render_template(
+            "account.html", active_page="account", user=current_user
+        )
     return redirect(url_for("login.html "))
