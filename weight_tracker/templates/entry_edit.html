@@ -1,0 +1,112 @@
+{% extends 'layout.html' %}
+
+{% block styles %}
+<style>
+    /* Style for active page */
+    .nav-item.active {
+        font-weight: bold;
+    }
+
+    /* Card Styling */
+    .card {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .card:hover {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+        transform: translateY(-5px);
+    }
+
+    /* Button Styling */
+    button label {
+        margin: 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex flex-column">
+                <div class="card mb-12">
+                    <div class="card-body">
+                        <form method="POST" action="{{ url_for('update_entry', entry_id=entry.id) }}">
+                            <input type="hidden" name="_method" value="PUT">
+                            {{ form.csrf_token }}
+                            <div class="form-group">
+                                <label for="{{ form.date.id }}" class="form-label">Date</label>
+                                {{ form.date(class="form-control form-control-lg") }}
+                                {% for error in form.date.errors %}
+                                <div class="alert alert-danger mt-2">
+                                    {{ error }}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.time_of_day.id }}" class="form-label">Time of Day</label>
+                                {{ form.time_of_day(class="form-control form-control-lg") }}
+                                {% for error in form.time_of_day.errors %}
+                                <div class="alert alert-danger mt-2">
+                                    {{ error }}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.mood.id }}" class="form-label">Mood</label>
+                                {{ form.mood(class="form-control form-control-lg") }}
+                                {% for error in form.mood.errors %}
+                                <div class="alert alert-danger mt-2">
+                                    {{ error }}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.status.id }}" class="form-label">Status</label>
+                                {{ form.status(class="form-control form-control-lg") }}
+                                {% for error in form.status.errors %}
+                                <div class="alert alert-danger mt-2">
+                                    {{ error }}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.weight.id }}" class="form-label">Weight</label>
+                                {{ form.weight(class="form-control form-control-lg") }}
+                                {% for error in form.weight.errors %}
+                                <div class="alert alert-danger mt-2">
+                                    {{ error }}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.measurement_waist.id }}" class="form-label">Measurement
+                                    Waist</label>
+                                {{ form.measurement_waist(class="form-control form-control-lg") }}
+                                {% for error in form.measurement_waist.errors %}
+                                <div class="alert alert-danger mt-2">
+                                    {{ error }}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.keto.id }}" class="form-label">Keto</label>
+                                {{ form.keto(class="form-control form-control-lg") }}
+                                {% for error in form.keto.errors %}
+                                <div class="alert alert-danger mt-2">
+                                    {{ error }}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {{ form.submit(class="btn btn-outline-info") }}
+                            <a href="{{ url_for('get_entry', entry_id=entry.id) }}" class="btn btn-secondary">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

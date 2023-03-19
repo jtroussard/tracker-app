@@ -1,7 +1,7 @@
 import sys
 from datetime import date
 
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, request, url_for, flash, abort
 from flask_login import login_required, login_user, current_user, logout_user
 from weight_tracker import app, db, bcrypt
 from weight_tracker.forms import LoginForm, RegistrationForm, TrackerEntryForm
@@ -19,15 +19,68 @@ def home():
     return render_template("home.html", active_page="home")
 
 
-@app.route("/tracker", methods=["GET", "POST"])
+@app.route("/tracker/<int:entry_id>", methods=["GET"])
 @login_required
-def tracker():
+def get_entry(entry_id):
+    print("get entry start")
+    entry = TrackerEntry.query.filter_by(
+        id=entry_id, active_record=True
+    ).first_or_404()
+    if entry.author != current_user:
+        abort(403)
+    # entry = TrackerEntry.query.get_or_404(entry_id).filter_by(TrackerEntry.active_record == True)
+    return render_template("entry.html", entry=entry)
+
+
+@app.route("/tracker/<int:entry_id>/update", methods=["GET", "PUT", "POST"])
+@login_required
+def update_entry(entry_id):
+    entry = TrackerEntry.query.filter_by(
+        id=entry_id, active_record=True
+    ).first_or_404()
+    if entry.author != current_user:
+        abort(403)
+    form = TrackerEntryForm(obj=entry)
+    if request.method == "POST":
+        print("log this: Request method is POST")
+        if form.validate_on_submit():
+            print("log this: Form validated successfully")
+            form.populate_obj(entry)
+            db.session.commit()
+            flash("Your entry has been updated!", "success")
+            return redirect(url_for("get_entry", entry_id=entry_id))
+        # else:
+        #     print("Form did not validate")
+        #     print(f"{form.errors}")
+    return render_template("entry_edit.html", form=form, entry=entry)
+
+
+@app.route("/tracker/<int:entry_id>", methods=["POST"])
+@login_required
+def delete_entry(entry_id):
+    entry = TrackerEntry.query.filter_by(
+        id=entry_id, active_record=True
+    ).first_or_404()
+    if entry.author != current_user:
+        abort(403)
+    else:
+        entry.active_record = False
+        db.session.commit()
+        flash("Your entry has been deleted!", "success")
+    return redirect(url_for("tracker_index"))
+
+
+@app.route("/tracker_index", methods=["GET", "POST"])
+@login_required
+def tracker_index():
     """
-    The function tracker() is called when the user visits the /tracker route.
+    The function get_tracker() is called when the user visits the /tracker route.
     :return: The tracker page is being returned.
     """
     if current_user.is_authenticated:
-        entries = TrackerEntry.query.filter_by(user_id=current_user.id).all()
+        entries = TrackerEntry.query.filter_by(
+            user_id=current_user.id, active_record=True
+        ).all()
         form = TrackerEntryForm()
         if form.validate_on_submit():
             entry = TrackerEntry(
@@ -43,13 +96,13 @@ def tracker():
             db.session.add(entry)
             db.session.commit()
             flash(f"You have submitted entry: {entry}", "success")
-            return redirect(url_for("tracker"))
+            return redirect(url_for("tracker_index"))
         return render_template(
-                "tracker.html",
-                active_page="tracker",
-                entries=entries,
-                form=form,
-            )
+            "tracker.html",
+            active_page="tracker",
+            entries=entries,
+            form=form,
+        )
     return redirect(url_for("home"))
 
 
@@ -67,7 +120,9 @@ def login():
     name = ""
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        user = User.query.filter_by(
+            email=form.email.data, active_record=True
+        ).first()
         if user and bcrypt.check_password_hash(
             user.password, form.password.data
         ):
