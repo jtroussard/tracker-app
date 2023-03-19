@@ -28,27 +28,24 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item {% if active_page == 'home' %}active{% endif %}">
-          <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+          <a class="nav-link" href="{{ url_for('main.home') }}">Home</a>
         </li>
         {% if current_user.is_authenticated %}
         <li class="nav-item {% if active_page == 'logout' %}active{% endif %}">
-          <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+          <a class="nav-link" href="{{ url_for('users.logout') }}">Logout</a>
         </li>
         <li class="nav-item {% if active_page == 'account' %}active{% endif %}">
-          <a class="nav-link" href="{{ url_for('account') }}">Account</a>
+          <a class="nav-link" href="{{ url_for('users.account') }}">Account</a>
         </li>
-        <li class="nav-item {% if active_page == 'tracker_index' %}active{% endif %}">
-          <a class="nav-link" href="{{ url_for('tracker_index') }}">Tracker</a>
-        </li>
-        <li class="class=nav-item {% if active_page == 'tracker' %}active{% endif %}">
-          <a class="nav-link" href="/tracker">Tracker</a>
+        <li class="nav-item {% if active_page == 'entry_index' %}active{% endif %}">
+          <a class="nav-link" href="{{ url_for('entries.entry_index') }}">Entries</a>
         </li>
         {% else %}
         <li class="nav-item {% if active_page == 'login' %}active{% endif %}">
-          <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+          <a class="nav-link" href="{{ url_for('users.login') }}">Login</a>
         </li>
         <li class="nav-item {% if active_page == 'register' %}active{% endif %}">
-          <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+          <a class="nav-link" href="{{ url_for('users.register') }}">Register</a>
         </li>
         {% endif %}
       </ul>

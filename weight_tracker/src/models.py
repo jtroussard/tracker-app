@@ -1,12 +1,19 @@
 # pylint: disable=too-few-public-methods
-
+"""Models module for flask application weight tracker"""
 from datetime import datetime
-from weight_tracker import db, login_manager
-from flask_login import UserMixin # For common attributes/methods for User
+
+from flask_login import UserMixin  # For common attributes/methods for User
+
+from weight_tracker.src import db, login_manager
+
+# Going to need to do some secret stuff in here use from flask import current_app
+
 
 @login_manager.user_loader
 def load_user(user_id):
+    """Tells extension how to get a user."""
     return User.query.get(int(user_id))
+
 
 class User(db.Model, UserMixin):
     """A class representing a user.
@@ -39,20 +46,18 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default="default.jpg")
     password = db.Column(db.String(60), nullable=False)
-    entry = db.relationship("TrackerEntry", backref="author", lazy="select")
+    entry = db.relationship("Entry", backref="author", lazy="select")
     active_record = db.Column(db.Boolean(), nullable=False, default=True)
 
     def __repr__(self):
         """
-        The __repr__ function is used to display the object in a way that is
-        unambiguous and can be used to recreate the object
         :return: The username, email, and image file of the user.
         """
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
 
-class TrackerEntry(db.Model):
-    """The TrackerEntry class is a model that represents a single entry in the
+class Entry(db.Model):
+    """The Entry class is a model that represents a single entry in the
     tracker. It has a date, time of day, mood, status, weight,
     measurement_waist, keto, and user_id
     """
@@ -74,4 +79,4 @@ class TrackerEntry(db.Model):
         """
         :return: The date and weight of the entry.
         """
-        return f"TrackerEntry('{self.date}', '{self.weight}')"
+        return f"Entry('{self.date}', '{self.weight}')"

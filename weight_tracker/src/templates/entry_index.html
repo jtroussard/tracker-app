@@ -35,7 +35,7 @@
   <h1>Tracker Page!</h1>
   <div class="row">
     <div class="col-md-8">
-      <form method="POST" action="{{ url_for('tracker_index') }}">
+      <form method="POST" action="{{ url_for('entries.entry_index') }}">
         {{ form.csrf_token }}
         <div class="form-group">
           <label for="{{ form.date.id }}" class="form-label">Date</label>
@@ -106,7 +106,7 @@
     <div class="col-md-4">
       <div class="d-flex flex-column">
         {% for entry in entries %}
-        <a href="{{ url_for('get_entry', entry_id=entry.id) }}" class="card-link">
+        <a href="{{ url_for('entries.get_entry', entry_id=entry.id) }}" class="card-link">
           <div class="card mb-3">
             <div class="card-body">
               <h5 class="card-title">{{ entry.date.date() }} - {{ entry.time_of_day|capitalize }}</h5>

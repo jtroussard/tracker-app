@@ -1,4 +1,6 @@
-from weight_tracker import app
+from weight_tracker.src import create_app
+
+app = create_app()
 
 if __name__ == "__main__":
     app.run()
