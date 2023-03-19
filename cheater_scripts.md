@@ -26,46 +26,13 @@ db.session.commit()
 
 from datetime import datetime
 
-entry_1 = Entry(
-    id=1,
-    date=datetime.now(),
-    time_of_day='Morning',
-    mood='good',
-    status='normal',
-    weight=270.0,
-    measurement_waist=46.0,
-    keto=1,
-    user_id=1,
-    active_record=1
-)
+entry_1 = Entry(id=1,date=datetime.now(),time_of_day='Morning',mood='good',status='normal',weight=270.0, measurement_waist=46.0,keto=1,user_id=1,active_record=1)
 
 # Entry 2
-entry_2 = Entry(
-    id=2,
-    date=datetime.now(),
-    time_of_day='Morning',
-    mood='good',
-    status='normal',
-    weight=170.0,
-    measurement_waist=46.0,
-    keto=1,
-    user_id=2,
-    active_record=1
-)
+entry_2 = Entry(id=2,date=datetime.now(),time_of_day='Morning',mood='good',status='normal',weight=170.0,measurement_waist=46.0,keto=1,user_id=2,active_record=1)
 
 # Entry 3
-entry_3 = Entry(
-    id=3,
-    date=datetime.now(),
-    time_of_day='Morning',
-    mood='good',
-    status='normal',
-    weight=271.0,
-    measurement_waist=46.0,
-    keto=1,
-    user_id=1,
-    active_record=1
-)
+entry_3 = Entry(id=3,date=datetime.now(),time_of_day='Morning',mood='good',status='normal',weight=271.0,measurement_waist=46.0,keto=1,user_id=1,active_record=1)
 
 # Entry 4
 entry_4 = Entry(
