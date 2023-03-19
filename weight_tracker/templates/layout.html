@@ -40,6 +40,9 @@
         <li class="nav-item {% if active_page == 'tracker_index' %}active{% endif %}">
           <a class="nav-link" href="{{ url_for('tracker_index') }}">Tracker</a>
         </li>
+        <li class="class=nav-item {% if active_page == 'tracker' %}active{% endif %}">
+          <a class="nav-link" href="/tracker">Tracker</a>
+        </li>
         {% else %}
         <li class="nav-item {% if active_page == 'login' %}active{% endif %}">
           <a class="nav-link" href="{{ url_for('login') }}">Login</a>

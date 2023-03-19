@@ -8,7 +8,6 @@ from weight_tracker.forms import LoginForm, RegistrationForm, TrackerEntryForm
 from weight_tracker.utils.helpers import clear_form
 from weight_tracker.models import User, TrackerEntry
 
-
 @app.route("/")
 @app.route("/home")
 def home():
