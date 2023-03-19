@@ -12,7 +12,7 @@
 {% block content %}
 <div class="content-section">
   <h1>Register!</h1>
-  <form method="POST" action="{{ url_for('register') }}">
+  <form method="POST" action="{{ url_for('users.register') }}">
     {{ form.hidden_tag() }}
     <fieldset class="form-group">
       <legend class="border-bottom mb-4">Join Today</legend>
@@ -72,15 +72,12 @@
     </fieldset>
     <div class="form-group">
       {{ form.submit(class="btn btn-outline-info") }}
-      <button class="btn btn-outline-info" type="submit"
-        formaction="{{ url_for('clear_form_route', form_name='RegistrationForm') }}">Clear</button>
-
     </div>
   </form>
 </div>
 <div class="border-top pt-3">
   <small class="text-muted">
-    Already Have An Account? <a class="ml-2" href="{{ url_for('login') }}">Sign In</a>
+    Already Have An Account? <a class="ml-2" href="{{ url_for('users.login') }}">Sign In</a>
   </small>
 </div>
 {% endblock %}

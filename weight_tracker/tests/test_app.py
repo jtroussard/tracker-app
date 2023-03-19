@@ -114,7 +114,7 @@ def test_logout_page_status_code_and_redirect(client):
     with app.app_context():
         response = client.get("/logout")
         assert response.status_code == 302
-        expected_location = url_for("home", _external=True)
+        expected_location = url_for("main.home", _external=True)
         assert f"{app.config['BASE_URL']}{response.location}" == expected_location
         response = client.get("/logout", follow_redirects=True)
         assert response.status_code == 200
