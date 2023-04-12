@@ -4,6 +4,13 @@
 python run.py
 ```
 # Database
+## Checking users live
+>>> from run import app
+>>> from weight_tracker.src import db
+>>> from weight_tracker.src.models import User, Entry
+>>> app.app_context().push()
+>>> User.query.all()
+
 ## Running database from python shell
 ```python
 from weight_tracker.src import app
