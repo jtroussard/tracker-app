@@ -2,3 +2,4 @@
 
 For deploy script test.
 deploy check
+deploy check
