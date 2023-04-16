@@ -27,7 +27,6 @@ else
     echo "Python 3 is already installed."
 fi
 
-
 echo "Checking if pip3 is installed..."
 if ! command -v pip3 &> /dev/null
 then
