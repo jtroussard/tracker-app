@@ -9,7 +9,7 @@ from wtforms import (
     SubmitField,
 )
 from wtforms.validators import InputRequired, Email, EqualTo, Length
-from weight_tracker.src.users.validators import validate_username, validate_email
+from app.src.users.validators import validate_username, validate_email
 
 
 class RegistrationForm(FlaskForm):

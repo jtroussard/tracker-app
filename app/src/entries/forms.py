@@ -11,12 +11,12 @@ from wtforms import (
     IntegerField,
 )
 from wtforms.validators import InputRequired
-from weight_tracker.src.constants.choices import (
+from app.src.constants.choices import (
     TIME_OF_DAY_CHOICES,
     MOOD_CHOICES,
     STATUS_CHOICES,
 )
-from weight_tracker.src.entries.validators import validate_weight
+from app.src.entries.validators import validate_weight
 
 
 class EntryForm(FlaskForm):

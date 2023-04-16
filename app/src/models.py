@@ -4,7 +4,7 @@ from datetime import datetime
 
 from flask_login import UserMixin  # For common attributes/methods for User
 
-from weight_tracker.src import db, login_manager
+from app.src import db, login_manager
 
 # Going to need to do some secret stuff in here use from flask import current_app
 

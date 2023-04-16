@@ -3,10 +3,10 @@ from datetime import date
 
 from flask import render_template, redirect, request, url_for, flash, abort
 from flask_login import login_required, login_user, current_user, logout_user
-from weight_tracker import app, db, bcrypt
-from weight_tracker.forms import LoginForm, RegistrationForm, EntryForm
-from weight_tracker.utils.helpers import clear_form
-from weight_tracker.models import User, TrackerEntry
+from app import app, db, bcrypt
+from app.forms import LoginForm, RegistrationForm, EntryForm
+from app.utils.helpers import clear_form
+from app.models import User, TrackerEntry
 
 
 @app.route("/clear_form/<form_name>", methods=["POST"])

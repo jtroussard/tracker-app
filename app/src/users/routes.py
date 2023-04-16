@@ -10,9 +10,9 @@ Routes:
 """
 from flask import render_template, redirect, url_for, flash, Blueprint
 from flask_login import login_required, login_user, current_user, logout_user
-from weight_tracker.src import db, bcrypt
-from weight_tracker.src.users.forms import LoginForm, RegistrationForm
-from weight_tracker.src.models import User
+from app.src import db, bcrypt
+from app.src.users.forms import LoginForm, RegistrationForm
+from app.src.models import User
 
 users = Blueprint("users", __name__)
 

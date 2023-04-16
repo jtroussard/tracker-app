@@ -10,7 +10,7 @@ validate_email(email): checks whether the given email is already in use by an
     unique.
 """
 from wtforms.validators import ValidationError
-from weight_tracker.src.models import User
+from app.src.models import User
 
 
 def validate_username(form, username):
