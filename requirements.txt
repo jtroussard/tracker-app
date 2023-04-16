@@ -15,7 +15,10 @@ Flask==2.2.3
 Flask-Bcrypt==1.0.1
 Flask-SQLAlchemy==3.0.3
 Flask-WTF==1.1.1
+greenlet==2.0.2
+gunicorn==20.1.0
 idna==3.4
+importlib-metadata==6.4.1
 is-disposable-email==1.0.0
 isort==5.10.1
 itsdangerous==2.1.2
@@ -26,17 +29,20 @@ mccabe==0.7.0
 mypy-extensions==1.0.0
 packaging==23.0
 pathspec==0.11.1
+pkg_resources==0.0.0
 platformdirs==2.5.2
 pylint==2.14.5
 pylint-django==2.5.3
 pylint-plugin-utils==0.7
 pylint-venv==3.0.1
 python-dotenv==0.21.1
+pytz==2023.3
 requests==2.28.2
 SQLAlchemy==2.0.5.post1
 sqlparse==0.4.2
 tomli==2.0.1
 tomlkit==0.11.4
+typed-ast==1.5.4
 typing_extensions==4.5.0
 urllib3==1.26.14
 virtualenv==20.21.0
@@ -44,3 +50,4 @@ Werkzeug==2.2.3
 wrapt==1.14.1
 WTForms==3.0.1
 wtforms-validators==1.0.0
+zipp==3.15.0

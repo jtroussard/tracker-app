@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 # Deploy script
 # 1. Check if there is a newer release available
@@ -19,9 +19,10 @@ sudo mkdir -p /home/jacques_troussard/logs
 logfile="/home/jacques_troussard/logs/tracker-app.deploy_$(date +"%Y%m%d%H%M%S%3N").log"
 
 # Redirect all output to the log file
-exec &> >(tee -a "$logfile")
+exec &> >(sudo tee -a "$logfile")
 
 # Check if there is a newer release available
+git fetch
 latest_tag=$(git describe --tags --abbrev=0 origin/61-feature-create-release-and-deploy-script)
 current_tag=$(git describe --tags)
 echo "latest_tag: $latest_tag"
@@ -33,7 +34,7 @@ else
     # Copy the contents of the current directory to ../old
     mkdir -p ../backup
     rm -rf ../backup/*
-    cp -r ./* ../backup
+    cp -r ./* ../backup/
 fi
 
 # Check out the latest release
@@ -84,6 +85,7 @@ source venv/bin/activate || {
     cp -r ../backup/* .
     exit 1
 }
+pip install --upgrade pip
 pip install -r requirements.txt || {
     echo "Failed to install dependencies. Rolling back..."
     git checkout $current_tag
@@ -94,7 +96,7 @@ pip install -r requirements.txt || {
 # NGINX
 # Check if Nginx config file has changed
 if [ -f /config/trackerapp.devlife4.me-nginx.conf ]; then
-    if [ $(diff /etc/nginx/sites-enabled/trackerapp.devlife4.me-nginx.conf /home/jacques_troussard/service/trackerapp/weight_tracker_2/config/trackerapp.devlive4.me-nginx.conf | wc -l) -ne 0 ]; then
+    if [ $(diff /etc/nginx/sites-enabled/trackerapp.devlife4.me-nginx.conf /config/trackerapp.devlife4.me-nginx.conf | wc -l) -ne 0 ]; then
         # Reload Nginx configuration
         if ! sudo nginx -t && sudo nginx -s reload; then
             echo "Failed to reload Nginx configuration. Rolling back..."
@@ -122,7 +124,7 @@ if ! sudo supervisorctl reread; then
 fi
 
 # Restart Supervisor to reload the app
-if ! sudo supervisorctl restart weight-tracker-2; then
+if ! sudo supervisorctl restart trackerapp; then
     echo "Failed to restart app with Supervisor. Rolling back..."
     git checkout $current_tag
     cp -r ../backup/* .
