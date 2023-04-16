@@ -5,8 +5,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 
-from weight_tracker.config import ProductionConfig, Config
-from weight_tracker.src.filters import get_username_filter
+from app.config import ProductionConfig, Config
+from app.src.filters import get_username_filter
 
 app = Flask(__name__)
 app.config.from_object(ProductionConfig)
@@ -25,9 +25,9 @@ def create_app(config_class=Config):
     bcrypt.init_app(app)
     login_manager.init_app(app)
 
-    from weight_tracker.src.users.routes import users
-    from weight_tracker.src.entries.routes import entries
-    from weight_tracker.src.main.routes import main
+    from app.src.users.routes import users
+    from app.src.entries.routes import entries
+    from app.src.main.routes import main
 
     app.register_blueprint(users)
     app.register_blueprint(entries)
