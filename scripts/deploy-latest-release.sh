@@ -94,7 +94,7 @@ pip install -r requirements.txt || {
 # NGINX
 # Check if Nginx config file has changed
 if [ -f /config/trackerapp.devlife4.me-nginx.conf ]; then
-    if [ $(diff /etc/nginx/sites-enabled/trackerapp.devlife4.me-nginx.conf /config/trackerapp.devlife4.me-nginx.conf | wc -l) -ne 0 ]; then
+    if [ $(diff /etc/nginx/sites-enabled/trackerapp.devlife4.me-nginx.conf /home/jacques_troussard/service/trackerapp/weight_tracker_2/config/trackerapp.devlive4.me-nginx.conf | wc -l) -ne 0 ]; then
         # Reload Nginx configuration
         if ! sudo nginx -t && sudo nginx -s reload; then
             echo "Failed to reload Nginx configuration. Rolling back..."
