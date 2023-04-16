@@ -1,5 +1,8 @@
 from dotenv import load_dotenv
-import os
+import os, json
+
+with open('/etc/tracker_app-config.json') as config_file:
+    config = json.load(config_file)
 
 # Load environment variables from .env file
 load_dotenv()
@@ -9,10 +12,10 @@ class Config:
     Base configuration class.
     """
     DEBUG = os.getenv('DEBUG')
-    TESTING = os.getenv('TESTING')
-    CSRF_ENABLED = os.getenv('CSRF_ENABLED')
-    SECRET_KEY = os.getenv('SECRET_KEY_TRACKER_APP')
-    SQLALCHEMY_DATABASE_URI = os.environ.get("SQLALCHEMY_DATABASE_URI")
+    TESTING = config.get('TESTING')
+    CSRF_ENABLED = config.get('CSRF_ENABLED')
+    SECRET_KEY = config.get('SECRET_KEY')
+    SQLALCHEMY_DATABASE_URI = config.get("SQLALCHEMY_DATABASE_URI")
 
 class ProductionConfig(Config):
     """
@@ -20,7 +23,6 @@ class ProductionConfig(Config):
     """
     DEBUG = False
     PORT = 8001
-    SQLALCHEMY_DATABASE_URI = os.environ.get("SQLALCHEMY_DATABASE_URI")
 
 class DevelopmentConfig(Config):
     """
