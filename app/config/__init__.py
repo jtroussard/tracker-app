@@ -1,11 +1,14 @@
-from dotenv import load_dotenv
 import os, json
 
-with open('/etc/tracker_app-config.json') as config_file:
-    config = json.load(config_file)
+import json
 
-# Load environment variables from .env file
-load_dotenv()
+try:
+    with open('/etc/tracker_app-config.json') as config_file:
+        config = json.load(config_file)
+except FileNotFoundError:
+    with open(os.path.join(os.path.dirname(__file__), 'default.json')) as config_file:
+        config = json.load(config_file)
+
 
 class Config:
     """
@@ -16,6 +19,7 @@ class Config:
     CSRF_ENABLED = config.get('CSRF_ENABLED')
     SECRET_KEY = config.get('SECRET_KEY')
     SQLALCHEMY_DATABASE_URI = config.get("SQLALCHEMY_DATABASE_URI")
+    PORT = config.get('PORT')
 
 class ProductionConfig(Config):
     """
@@ -38,19 +42,3 @@ class TestingConfig(Config):
     """
     TESTING = True
     PORT = 8001
-
-
-
-#     import os
-
-
-# class Config(object):
-#     SERVER_NAME = "localhost:8001"
-#     DEBUG = True
-#     BASE_URL = "http://localhost:8001"
-#     SECRET_KEY = os.environ.get("SECRET_KEY")
-#     SQLALCHEMY_DATABASE_URI = os.environ.get("SQLALCHEMY_DATABASE_URI")
-
-
-# class TestingConfig(object):
-#     BASE_URL = "http://localhost:8001"

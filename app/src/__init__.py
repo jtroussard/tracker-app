@@ -18,7 +18,6 @@ login_manager = LoginManager()  # Handles sessions
 # Don't forget to set the env when going prod, including the base config variables.
 def create_app(config_class=Config):
     app = Flask(__name__)
-    app.config.from_object(ProductionConfig)
     app.jinja_env.filters["get_username_filter"] = get_username_filter
 
     db.init_app(app)

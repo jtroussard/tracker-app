@@ -1,0 +1,7 @@
+{
+    "SQLALCHEMY_DATABASE_URI":"sqlite:///test.db",
+    "CSRF_ENABLED": true,
+    "SECRET_KEY":"whateverdude",
+    "TESTING": true,
+    "PORT": "8000"
+}
