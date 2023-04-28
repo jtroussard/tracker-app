@@ -9,7 +9,7 @@ from app.config import ProductionConfig, Config
 from app.src.filters import get_username_filter
 
 app = Flask(__name__)
-app.config.from_object(ProductionConfig)
+app.config.from_object(Config)
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -17,7 +17,6 @@ login_manager = LoginManager()  # Handles sessions
 
 # Don't forget to set the env when going prod, including the base config variables.
 def create_app(config_class=Config):
-    app = Flask(__name__)
     app.jinja_env.filters["get_username_filter"] = get_username_filter
 
     db.init_app(app)

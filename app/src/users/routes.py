@@ -69,6 +69,7 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for("main.home"))
     form = RegistrationForm()
+    print('about to validate')
     if form.validate_on_submit():
         hashed_pw = bcrypt.generate_password_hash(form.password.data).decode("utf8")
         new_user = User(
@@ -81,6 +82,8 @@ def register():
         logout_user()
         flash("Your account has been created. You may now login.", "success")
         return redirect(url_for("users.login"))
+    print('something wrong with the form')
+    print(form.validate_on_submit())
     return render_template("register.html", active_page="register", form=form)
 
 

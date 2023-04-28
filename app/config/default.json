@@ -3,5 +3,7 @@
     "CSRF_ENABLED": true,
     "SECRET_KEY":"whateverdude",
     "TESTING": true,
-    "PORT": "8000"
+    "PORT": "8000",
+    "SERVER_NAME": "127.0.0.1:8000",
+    "FLASK_RUN_PORT": 8000
 }

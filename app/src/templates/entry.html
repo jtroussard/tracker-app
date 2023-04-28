@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends 'layouts/layout.html' %}
 
 {% block styles %}
 <style>
@@ -29,9 +29,47 @@
 <div class="container-fluid mt-3">
     <div class="row">
         <div class="col-md-12">
+        <div class="card ">
+            <div class="card-header card-header-rose card-header-icon">
+              <div class="card-icon">
+                <i class="material-icons">mail_outline</i>
+              </div>
+              <h4 class="card-title">Stacked Form!!!!</h4>
+            </div>
+            <div class="card-body ">
+              <form method="#" action="#">
+                <div class="form-group">
+                  <label for="exampleEmail" class="bmd-label-floating">Email Address</label>
+                  <input type="email" class="form-control" id="exampleEmail">
+                </div>
+                <div class="form-group">
+                  <label for="examplePass" class="bmd-label-floating">Password</label>
+                  <input type="password" class="form-control" id="examplePass">
+                </div>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" value=""> Subscribe to newsletter
+                    <span class="form-check-sign">
+                      <span class="check"></span>
+                    </span>
+                  </label>
+                </div>
+              </form>
+            </div>
+            <div class="card-footer ">
+              <button type="submit" class="btn btn-fill btn-rose">Submit</button>
+            </div>
+          </div>
+    </div>
+</div>
+    <div class="row">
+        ?????
+        <div class="col-md-12">
+            PPPPPP
             <div class="d-flex flex-column">
                 <div class="card mb-12">
                     <div class="card-body">
+                        ??#@$#$#$#$#$   
                         <h5 class="card-title">Entry Dated: {{ entry.date.date() }} @ {{ entry.time_of_day }}</h5>
                         <p class="card-text">Mood: {{ entry.mood }}</p>
                         <p class="card-text">Status: {{ entry.status }}</p>

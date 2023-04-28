@@ -1,72 +1,119 @@
-{% extends 'layout.html' %}
+{% extends "layouts/base-fullscreen.html" %}
 
-{% block styles %}
-<style>
-    /* Style for active page */
-    .nav-item.active {
-      font-weight: bold;
-    }
-</style>
-{% endblock %}
+{% block title %} Login {% endblock title %}
 
 {% block content %}
-  <h1>Login!</h1>
-  <p>Welcome to Weight Tracker 2</p>
 
-  <div>
-    <form method="POST" action="/login">
-      {{ form.hidden_tag() }}
-      <fieldset class="form-group">
-        <legend class="border-bottom mb-4">Log In</legend>
-        <div class="form-group">
-          {{ form.email.label(class="form-control-label") }}
-          {% if form.email.errors %}
-          {{ form.email(class="form-control form-control-lg is-invalid") }}
-          <div class="invalid-feedback">
-            {% for error in form.email.errors %}
-            <span>{{ error }}</span>
-            {% endfor %}
+<div class="page-header login-page header-filter" filter-color="black"
+  style="background-image: url('/static/assets/img/login.jpg'); background-size: cover; background-position: top center;">
+  <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
+
+        <form role="form" method="post" action="">
+
+          {{ form.hidden_tag() }}
+
+          <div class="card card-login card-hidden">
+            <div class="card-header card-header-rose text-center">
+              <h4 class="card-title">
+                Login
+              </h4>
+              <div class="social-line text-white">
+                {% if msg %}
+                {{ msg | safe }}
+                {% else %}
+                <span>
+                  Add your credentials
+                </span>
+                {% endif %}
+              </div>
+            </div>
+            <div class="card-body ">
+              <span class="bmd-form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="material-icons">face</i>
+                    </span>
+                  </div>
+                  {% if form.email.errors %}
+                  {{ form.email(class="form-control form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %}
+                  {{ form.email(class="form-control form-control-lg", placeholder="Email") }}
+                  {% endif %}
+                </div>
+              </span>
+
+              <span class="bmd-form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="material-icons">lock_outline</i>
+                    </span>
+                  </div>
+                  {{ form.password(placeholder="Password", class="form-control", type="password") }}
+                </div>
+              </span>
+
+
+            </div>
+            <div class="card-footer justify-content-center">
+              <button type="submit" name="login" class="btn btn-primary my-4">Login</button>
+            </div>
+
+            <div class="form-check text-center">
+              <label class="form-check-label">
+                Premium Seed Project
+              </label>
+            </div>
+
+            <br />
+
           </div>
-          {% else %}
-          {{ form.email(class="form-control form-control-lg") }}
-          {% endif %}
+          <small class="text-muted ml-2">
+            <a href="#">Forgot Password?</a>
+          </small>
+        </form>
+        <div class="border-top pt-3">
+          <p>
+            <small class="text-muted">
+              Need An Account? <a href="{{ url_for('users.register') }}">Sign Up Now</a>
+            </small>
+          </p>
+          <p>
+            <small class="text-muted">
+              Click <a href="{{ url_for('users.logout') }}">here</a> to test the logout route.
+            </small>
+          </p>
         </div>
-        <div class="form-group">
-        {{ form.password.label(class="form-control-label") }}
-        {% if form.password.errors %}
-        {{ form.password(class="form-control form-control-lg is-invalid") }}
-          <div class="invalid-feedback">
-          {% for error in form.password.errors %}
-            <span>{{ error }}</span>
-          {% endfor %}
-          </div>
-        {% else %}
-        {{ form.password(class="form-control form-control-lg") }}
-        {% endif %}
-        </div>
-        <div class="form-check">
-        {{ form.remember(class="form-check-input") }}
-        {{ form.remember.label(class="form-check-label") }}
-        </div>
-      </fieldset>
-      <div class="form-group">
-      {{ form.submit(class="btn btn-outline-info") }}
+
       </div>
-      <small class="text-muted ml-2">
-      <a href="#">Forgot Password?</a>
-      </small>
-      </form>
     </div>
-  <div class="border-top pt-3">
-    <p>
-      <small class="text-muted">
-      Need An Account? <a href="{{ url_for('users.register') }}">Sign Up Now</a>
-      </small>
-    </p>
-    <p>
-      <small class="text-muted">
-      Click <a href="{{ url_for('users.logout') }}">here</a> to test the logout route.
-      </small>
-    </p>
   </div>
-{% endblock %}
+
+  {% include 'includes/footer-fullscreen.html' %}
+
+</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+
+<script>
+  $(document).ready(function () {
+    md.checkFullPageBackgroundImage();
+    setTimeout(function () {
+      // after 1000 ms we add the class animated to the login/register card
+      $('.card').removeClass('card-hidden');
+    }, 700);
+  });
+</script>
+
+{% endblock javascripts %}
