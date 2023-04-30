@@ -6,7 +6,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 
 from app.config import ProductionConfig, Config
-from app.src.filters import get_username_filter
+from app.src.filters import get_username_filter, get_month_name
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -19,6 +19,7 @@ login_manager = LoginManager()  # Handles sessions
 # Don't forget to set the env when going prod, including the base config variables.
 def create_app(config_class=Config):
     app.jinja_env.filters["get_username_filter"] = get_username_filter
+    app.jinja_env.filters["get_month_name"] = get_month_name
 
     db.init_app(app)
     bcrypt.init_app(app)

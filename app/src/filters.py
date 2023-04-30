@@ -1,5 +1,6 @@
-"""Filters for flask application weight-tracker"""
+import calendar
 
+"""Filters for flask application weight-tracker"""
 
 def get_username_filter(current_user):
     """
@@ -13,3 +14,7 @@ def get_username_filter(current_user):
     if current_user.is_authenticated:
         return current_user.username
     return ""
+
+
+def get_month_name(month_number):
+    return calendar.month_name[month_number]

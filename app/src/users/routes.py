@@ -102,5 +102,5 @@ def account():
     :return: The account.html template with the current user's data.
     """
     if current_user.is_authenticated:
-        return render_template("account.html", active_page="account", user=current_user)
+        return render_template("account.html", active_page="account", user=current_user, now=datetime.now())
     return redirect(url_for("users.login"))
