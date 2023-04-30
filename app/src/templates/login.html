@@ -2,71 +2,131 @@
 
 {% block styles %}
 <style>
-    /* Style for active page */
-    .nav-item.active {
-      font-weight: bold;
-    }
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        width: 100%;
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .btn-bd-primary {
+        --bd-violet-bg: #712cf9;
+        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+        --bs-btn-font-weight: 600;
+        --bs-btn-color: var(--bs-white);
+        --bs-btn-bg: var(--bd-violet-bg);
+        --bs-btn-border-color: var(--bd-violet-bg);
+        --bs-btn-hover-color: var(--bs-white);
+        --bs-btn-hover-bg: #6528e0;
+        --bs-btn-hover-border-color: #6528e0;
+        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+        --bs-btn-active-color: var(--bs-btn-hover-color);
+        --bs-btn-active-bg: #5a23c8;
+        --bs-btn-active-border-color: #5a23c8;
+      }
+      .bd-mode-toggle {
+        z-index: 1500;
+      }
 </style>
+<link href="{{ url_for('static', filename='css/sign-in.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-  <h1>Login!</h1>
-  <p>Welcome to Weight Tracker 2</p>
+<main class="form-signin w-100 m-auto">
 
-  <div>
-    <form method="POST" action="/login">
-      {{ form.hidden_tag() }}
-      <fieldset class="form-group">
-        <legend class="border-bottom mb-4">Log In</legend>
-        <div class="form-group">
-          {{ form.email.label(class="form-control-label") }}
-          {% if form.email.errors %}
-          {{ form.email(class="form-control form-control-lg is-invalid") }}
-          <div class="invalid-feedback">
-            {% for error in form.email.errors %}
-            <span>{{ error }}</span>
-            {% endfor %}
-          </div>
-          {% else %}
-          {{ form.email(class="form-control form-control-lg") }}
-          {% endif %}
+  <form method="POST" action="/login">
+    {{ form.hidden_tag() }}
+    <img class="mb-4 mx-auto d-block" src="{{ url_for('static', filename='icons/weighing-scale.png') }}" alt="" width="72" height="57">
+    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+
+    <div class="form-group">
+      {{ form.email.label(class="form-control-label") }}
+      {% if form.email.errors %}
+      {{ form.email(class="form-control form-control-lg is-invalid", id="exampleInputEmail", placeholder="example@email.com") }}
+      <div class="invalid-feedback">
+        {% for error in form.email.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% else %}
+      {{ form.email(class="form-control form-control-lg", id="exampleInputEmail", placeholder="example@email.com") }}
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      {{ form.password.label(class="form-control-label") }}
+      {% if form.password.errors %}
+      {{ form.password(class="form-control form-control-lg is-invalid", id="exampleInputPassword1") }}
+        <div class="invalid-feedback">
+        {% for error in form.password.errors %}
+          <span>{{ error }}</span>
+        {% endfor %}
         </div>
-        <div class="form-group">
-        {{ form.password.label(class="form-control-label") }}
-        {% if form.password.errors %}
-        {{ form.password(class="form-control form-control-lg is-invalid") }}
-          <div class="invalid-feedback">
-          {% for error in form.password.errors %}
-            <span>{{ error }}</span>
-          {% endfor %}
-          </div>
-        {% else %}
-        {{ form.password(class="form-control form-control-lg") }}
-        {% endif %}
-        </div>
-        <div class="form-check">
+      {% else %}
+      {{ form.password(class="form-control form-control-lg", id="exampleInputPassword1") }}
+      {% endif %}
+    </div>
+
+      <div class="form-check mb-3">
         {{ form.remember(class="form-check-input") }}
         {{ form.remember.label(class="form-check-label") }}
-        </div>
-      </fieldset>
-      <div class="form-group">
-      {{ form.submit(class="btn btn-outline-info") }}
       </div>
-      <small class="text-muted ml-2">
-      <a href="#">Forgot Password?</a>
-      </small>
-      </form>
+
+    <div class="form-group">
+      {{ form.submit(class="w-100 btn btn-lg btn-primary") }}
     </div>
-  <div class="border-top pt-3">
-    <p>
-      <small class="text-muted">
-      Need An Account? <a href="{{ url_for('users.register') }}">Sign Up Now</a>
-      </small>
-    </p>
-    <p>
-      <small class="text-muted">
-      Click <a href="{{ url_for('users.logout') }}">here</a> to test the logout route.
-      </small>
-    </p>
-  </div>
+    <small class="text-muted ml-2">
+      <a href="#">Forgot Password?</a>
+    </small>
+
+  </form>
+  <div><small>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik"> Freepik </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></small></div>
+</main>
 {% endblock %}

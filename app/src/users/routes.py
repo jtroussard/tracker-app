@@ -16,6 +16,10 @@ from app.src.models import User
 
 users = Blueprint("users", __name__)
 
+@users.route("/test", methods=["POST", "GET"])
+def test():
+    return render_template('test.html')
+
 
 @users.route("/login", methods=["POST", "GET"])
 def login():
@@ -35,6 +39,8 @@ def login():
             flash("Login Successful", "success")
             return redirect(url_for("main.home"))
         flash("Login Failed. Please check username/password", "danger")
+        print('form good creds bad')
+    print(f'form bad {form.errors}')
     return render_template("login.html", active_page="login", form=form)
 
 

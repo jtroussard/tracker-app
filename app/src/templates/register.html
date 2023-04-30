@@ -7,77 +7,83 @@
     font-weight: bold;
   }
 </style>
+<link href="{{ url_for('static', filename='css/sign-in.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-<div class="content-section">
-  <h1>Register!</h1>
+
+<main class="form-signin w-100 m-auto">
   <form method="POST" action="{{ url_for('users.register') }}">
     {{ form.hidden_tag() }}
-    <fieldset class="form-group">
-      <legend class="border-bottom mb-4">Join Today</legend>
-      <div class="form-group">
-        {{ form.username.label(class="form-control-label") }}
-
-        {% if form.username.errors %}
-        {{ form.username(class="form-control form-control-lg is-invalid") }}
-        <div class="invalid-feedback">
-          {% for error in form.username.errors %}
-          <span>{{ error }}</span>
-          {% endfor %}
-        </div>
-        {% else %}
-        {{ form.username(class="form-control form-control-lg") }}
-        {% endif %}
-      </div>
-      <div class="form-group">
-        {{ form.email.label(class="form-control-label") }}
-        {% if form.email.errors %}
-        {{ form.email(class="form-control form-control-lg is-invalid") }}
-        <div class="invalid-feedback">
-          {% for error in form.email.errors %}
-          <span>{{ error }}</span>
-          {% endfor %}
-        </div>
-        {% else %}
-        {{ form.email(class="form-control form-control-lg") }}
-        {% endif %}
-      </div>
-      <div class="form-group">
-        {{ form.password.label(class="form-control-label") }}
-        {% if form.password.errors %}
-        {{ form.password(class="form-control form-control-lg is-invalid") }}
-        <div class="invalid-feedback">
-          {% for error in form.password.errors %}
-          <span>{{ error }}</span>
-          {% endfor %}
-        </div>
-        {% else %}
-        {{ form.password(class="form-control form-control-lg") }}
-        {% endif %}
-      </div>
-      <div class="form-group">
-        {{ form.confirm_password.label(class="form-control-label") }}
-        {% if form.confirm_password.errors %}
-        {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
-        <div class="invalid-feedback">
-          {% for error in form.confirm_password.errors %}
-          <span>{{ error }}</span>
-          {% endfor %}
-        </div>
-        {% else %}
-        {{ form.confirm_password(class="form-control form-control-lg") }}
-        {% endif %}
-      </div>
-    </fieldset>
+    <img class="mb-4 mx-auto d-block" src="{{ url_for('static', filename='icons/weighing-scale.png') }}" alt="" width="72" height="57">
+    <h1 class="h3 mb-3 fw-normal">Join today!</h1>
+    <!-- USERNAME -->
     <div class="form-group">
-      {{ form.submit(class="btn btn-outline-info") }}
+      {{ form.username.label(class="form-control-label") }}
+      {% if form.username.errors %}
+      {{ form.username(class="form-control form-control-lg is-invalid") }}
+      <div class="invalid-feedback">
+        {% for error in form.username.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% else %}
+      {{ form.username(class="form-control form-control-lg") }}
+      {% endif %}
     </div>
-  </form>
-</div>
-<div class="border-top pt-3">
-  <small class="text-muted">
-    Already Have An Account? <a class="ml-2" href="{{ url_for('users.login') }}">Sign In</a>
+    <!-- EMAIL -->
+    <div class="form-group">
+      {{ form.email.label(class="form-control-label") }}
+      {% if form.email.errors %}
+      {{ form.email(class="form-control form-control-lg is-invalid") }}
+      <div class="invalid-feedback">
+        {% for error in form.email.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% else %}
+      {{ form.email(class="form-control form-control-lg") }}
+      {% endif %}
+    </div>
+    <!-- PASSWORD -->
+    <div class="form-group">
+      {{ form.password.label(class="form-control-label") }}
+      {% if form.password.errors %}
+      {{ form.password(class="form-control form-control-lg is-invalid") }}
+      <div class="invalid-feedback">
+        {% for error in form.password.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% else %}
+      {{ form.password(class="form-control form-control-lg") }}
+      {% endif %}
+    </div>
+    <!-- CONFIRM PASSOWRD -->
+    <div class="form-group">
+      {{ form.confirm_password.label(class="form-control-label") }}
+      {% if form.confirm_password.errors %}
+      {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
+      <div class="invalid-feedback">
+        {% for error in form.confirm_password.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% else %}
+      {{ form.confirm_password(class="form-control form-control-lg") }}
+      {% endif %}
+    </div>
+    <!-- TODO Add  "I have read TOS" -->
+
+  <div class="form-group">
+    {{ form.submit(class="w-100 btn btn-lg btn-primary") }}
+  </div>
+  <small class="text-muted ml-2">
+    <a href="{{ url_for('users.login')}}">Already a member?</a>
   </small>
-</div>
+    </form>
+    <div><small>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik"> Freepik </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></small></div>
+</main>
+
+
 {% endblock %}
