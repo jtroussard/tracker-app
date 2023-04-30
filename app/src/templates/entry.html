@@ -45,11 +45,20 @@
                             <button type="button" class="btn btn-secondary" disabled>Next</button>
                         </div>
                         <div class="d-flex">
-                            <a class="btn btn-primary ml-auto mr-2"
-                                href="{{ url_for('entries.update_entry', entry_id=entry.id, entry=entry) }}">Edit</a>
-                            <form method="post" action="{{ url_for('entries.delete_entry', entry_id=entry.id) }}">
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
+                            <div class="d-flex justify-content-center">
+                                
+                              </div>
+                              
+                              <a class="btn btn-lg btn-primary ml-auto mr-2"
+                              href="{{ url_for('entries.update_entry', entry_id=entry.id, entry=entry) }}">Edit</a>
+                              <a class="btn btn-lg btn-danger ml-auto mr-2"
+                                href="{{ url_for('entries.delete_entry', entry_id=entry.id) }}">Delete</a>
+
+                                <form method="POST">
+                                    <button type="submit" formmethod="GET" formaction="{{ url_for('entries.update_entry', entry_id=entry.id) }}">Update</button>
+                                    <button type="submit" formaction="{{ url_for('entries.delete_entry', entry_id=entry.id) }}">Delete</button>
+                                  </form>
+                                  
                         </div>
                     </div>
                 </div>
@@ -57,6 +66,4 @@
         </div>
     </div>
 </div>
-
-
 {% endblock %}

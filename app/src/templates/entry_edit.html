@@ -22,91 +22,86 @@
     button label {
         margin: 0;
     }
+
+    .container-single-form {
+        padding: 10%;
+    }
 </style>
+<link href="{{ url_for('static', filename='css/sign-in.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid mt-3">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="d-flex flex-column">
-                <div class="card mb-12">
-                    <div class="card-body">
-                        <form method="POST" action="{{ url_for('entries.update_entry', entry_id=entry.id) }}">
-                            <input type="hidden" name="_method" value="PUT">
-                            {{ form.csrf_token }}
-                            <div class="form-group">
-                                <label for="{{ form.date.id }}" class="form-label">Date</label>
-                                {{ form.date(class="form-control form-control-lg") }}
-                                {% for error in form.date.errors %}
-                                <div class="alert alert-danger mt-2">
-                                    {{ error }}
-                                </div>
-                                {% endfor %}
-                            </div>
-                            <div class="form-group">
-                                <label for="{{ form.time_of_day.id }}" class="form-label">Time of Day</label>
-                                {{ form.time_of_day(class="form-control form-control-lg") }}
-                                {% for error in form.time_of_day.errors %}
-                                <div class="alert alert-danger mt-2">
-                                    {{ error }}
-                                </div>
-                                {% endfor %}
-                            </div>
-                            <div class="form-group">
-                                <label for="{{ form.mood.id }}" class="form-label">Mood</label>
-                                {{ form.mood(class="form-control form-control-lg") }}
-                                {% for error in form.mood.errors %}
-                                <div class="alert alert-danger mt-2">
-                                    {{ error }}
-                                </div>
-                                {% endfor %}
-                            </div>
-                            <div class="form-group">
-                                <label for="{{ form.status.id }}" class="form-label">Status</label>
-                                {{ form.status(class="form-control form-control-lg") }}
-                                {% for error in form.status.errors %}
-                                <div class="alert alert-danger mt-2">
-                                    {{ error }}
-                                </div>
-                                {% endfor %}
-                            </div>
-                            <div class="form-group">
-                                <label for="{{ form.weight.id }}" class="form-label">Weight</label>
-                                {{ form.weight(class="form-control form-control-lg") }}
-                                {% for error in form.weight.errors %}
-                                <div class="alert alert-danger mt-2">
-                                    {{ error }}
-                                </div>
-                                {% endfor %}
-                            </div>
-                            <div class="form-group">
-                                <label for="{{ form.measurement_waist.id }}" class="form-label">Measurement
-                                    Waist</label>
-                                {{ form.measurement_waist(class="form-control form-control-lg") }}
-                                {% for error in form.measurement_waist.errors %}
-                                <div class="alert alert-danger mt-2">
-                                    {{ error }}
-                                </div>
-                                {% endfor %}
-                            </div>
-                            <div class="form-group">
-                                <label for="{{ form.keto.id }}" class="form-label">Keto</label>
-                                {{ form.keto(class="form-control form-control-lg") }}
-                                {% for error in form.keto.errors %}
-                                <div class="alert alert-danger mt-2">
-                                    {{ error }}
-                                </div>
-                                {% endfor %}
-                            </div>
-                            {{ form.submit(class="btn btn-outline-info") }}
-                            <a href="{{ url_for('entries.get_entry', entry_id=entry.id) }}" class="btn btn-secondary">Cancel</a>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<div class="col-md-12 container-single-form">
+    <h4 class="mb-3">Entry Form</h4>
+    <form method="POST" action="{{ url_for('entries.entry_index') }}">
+      {{ form.csrf_token }}
+      <div class="form-group">
+        <label for="{{ form.date.id }}" class="form-label">Date</label>
+        {{ form.date(class="form-control form-control-lg") }}
+      </div>
+      {% for error in form.date.errors %}
+      <div class="alert alert-danger">
+        {{ error }}
+      </div>
+      {% endfor %}
+      <div class="form-group">
+        <label for="{{ form.time_of_day.id }}" class="form-label">Time of Day</label>
+        {{ form.time_of_day(class="form-control form-control-lg") }}
+      </div>
+      {% for error in form.time_of_day.errors %}
+      <div class="alert alert-danger">
+        {{ error }}
+      </div>
+      {% endfor %}
+      <div class="form-group">
+        <label for="{{ form.mood.id }}" class="form-label">Mood</label>
+        {{ form.mood(class="form-control form-control-lg") }}
+      </div>
+      {% for error in form.mood.errors %}
+      <div class="alert alert-danger">
+        {{ error }}
+      </div>
+      {% endfor %}
+      <div class="form-group">
+        <label for="{{ form.status.id }}" class="form-label">Status</label>
+        {{ form.status(class="form-control form-control-lg") }}
+      </div>
+      {% for error in form.status.errors %}
+      <div class="alert alert-danger">
+        {{ error }}
+      </div>
+      {% endfor %}
+      <div class="form-group">
+        <label for="{{ form.weight.id }}" class="form-label">{{ form.weight.label }}</label>
+        {{ form.weight(class="form-control form-control-lg") }}
+      </div>
+      {% for error in form.weight.errors %}
+      <div class="alert alert-danger">
+        WEIGHT {{ error }} {{ form.weight.data }}
+      </div>
+      {% endfor %}
+      <div class="form-group">
+        <label for="{{ form.measurement_waist.id }}" class="form-label">Waist Measurement</label>
+        {{ form.measurement_waist(class="form-control form-control-lg") }}
+      </div>
+      {% for error in form.measurement_waist.errors %}
+      <div class="alert alert-danger">
+        {{ error }}
+      </div>
+      {% endfor %}
+      <div class="form-group">
+        <label for="{{ form.keto.id }}" class="form-label">Ketosis Level</label>
+        {{ form.keto(class="form-control form-control-lg") }}
+      </div>
+      {% for error in form.keto.errors %}
+      <div class="alert alert-danger">
+        {{ error }}
+      </div>
+      {% endfor %}
+      <div class="form-group">
+        {{ form.submit(class="w-100 btn btn-lg btn-primary") }}
+      </div>
+    </form>
+  </div>
 
 {% endblock %}

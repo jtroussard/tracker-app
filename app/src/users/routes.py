@@ -10,11 +10,16 @@ Routes:
 """
 from flask import render_template, redirect, url_for, flash, Blueprint
 from flask_login import login_required, login_user, current_user, logout_user
+from datetime import datetime
 from app.src import db, bcrypt
 from app.src.users.forms import LoginForm, RegistrationForm
 from app.src.models import User
 
 users = Blueprint("users", __name__)
+
+@users.route("/test", methods=["POST", "GET"])
+def test():
+    return render_template('test.html')
 
 
 @users.route("/login", methods=["POST", "GET"])
@@ -35,6 +40,8 @@ def login():
             flash("Login Successful", "success")
             return redirect(url_for("main.home"))
         flash("Login Failed. Please check username/password", "danger")
+        print('form good creds bad')
+    print(f'form bad {form.errors}')
     return render_template("login.html", active_page="login", form=form)
 
 
@@ -73,8 +80,13 @@ def register():
         hashed_pw = bcrypt.generate_password_hash(form.password.data).decode("utf8")
         new_user = User(
             username=form.username.data,
+            first_name=form.first_name.data,
+            middle_name=form.middle_name.data,
+            last_name=form.last_name.data,
+            date_of_birth=form.date_of_birth.data,
             email=form.email.data,
             password=hashed_pw,
+            joined_date=datetime.now(),
         )
         db.session.add(new_user)
         db.session.commit()
@@ -94,5 +106,5 @@ def account():
     :return: The account.html template with the current user's data.
     """
     if current_user.is_authenticated:
-        return render_template("account.html", active_page="account", user=current_user)
+        return render_template("account.html", active_page="account", user=current_user, now=datetime.now())
     return redirect(url_for("users.login"))
