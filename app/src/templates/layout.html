@@ -12,6 +12,31 @@
       color: #007bff;
       margin-bottom: 0rem;
     }
+    /* Style for active page */
+  .nav-item.active {
+    font-weight: bold;
+  }
+
+  /* Card Styling */
+  .card {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    transform: translateY(-5px);
+  }
+
+  .card-link+.card-link {
+    margin-left: 0;
+    /* turn off margin */
+  }
+
+  /* Button Styling */
+  button label {
+    margin: 0;
+  }
   </style>
   <!-- Custom Styles -->
   {% block styles %}{% endblock %}

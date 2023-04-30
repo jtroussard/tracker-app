@@ -2,25 +2,76 @@
 
 {% block styles %}
 <style>
-.circle-img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-}
+  .circle-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
 
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .card-body .circle-img {
+    margin-top: 20px;
+    /* adjust as needed */
+  }
+
+  .card-account-title {
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .muted {
+    color: #6d6d6d;
+    /* Set the text color to a muted gray */
+    opacity: 0.99;
+    /* Reduce the opacity to make the text appear more muted */
+  }
 </style>
 {% endblock %}
 
 {% block content %}
+
 <div class="container-fluid mt-3">
-    <h1>User Account</h1>
-    <h2>Welcome, {{ user.username }}!</h2>
-    <img src="{{ url_for('static', filename=user.image_file) }}" class="circle-img" alt="Profile Picture">
-    <ul>
-        <li><strong>ID:</strong> {{ user.id }}</li>
-        <li><strong>Username:</strong> {{ user.username }}</li>
-        <li><strong>Email:</strong> {{ user.email }}</li>
-        <li><strong>Entry:</strong> {{ user.entry }}</li>
-    </ul>
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card mb-4">
+        <div class="card-body">
+          <img src="{{ url_for('static', filename=user.image_file) }}" class="circle-img" alt="Profile Picture">
+          <h4 class="card-account-title">{{ user.username }}</h4>
+          <p class="muted">Joined: </p>
+          <p class="muted">Omaha, Nebraska</p>
+          <p class="card-text">Let's start receording your progress by making an entry today!</p>
+        </div>
+      </div>
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">You do not have any journal entries yet.</h5>
+          <p class="card-text">Let's start receording your progress by making an entry today!</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">You do not have any journal entries yet.</h5>
+          <p class="card-text">Let's start receording your progress by making an entry today!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h1>User Account</h1>
+  <h2>Welcome, {{ user.username }}!</h2>
+  <img src="{{ url_for('static', filename=user.image_file) }}" class="circle-img" alt="Profile Picture">
+  <ul>
+    <li><strong>ID:</strong> {{ user.id }}</li>
+    <li><strong>Username:</strong> {{ user.username }}</li>
+    <li><strong>Email:</strong> {{ user.email }}</li>
+    <li><strong>Entry:</strong> {{ user.entry }}</li>
+  </ul>
 </div>
 {% endblock %}
