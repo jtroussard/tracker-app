@@ -8,12 +8,12 @@ Routes:
 /logout: logs current user out of current session.
 /account: renders user information.
 """
+from datetime import datetime
 from flask import render_template, redirect, url_for, flash, Blueprint
 from flask_login import login_required, login_user, current_user, logout_user
-from datetime import datetime
 from app.src import db, bcrypt
 from app.src.users.forms import LoginForm, RegistrationForm
-from app.src.models import User
+from app.src.models import User, Entry
 
 users = Blueprint("users", __name__)
 
@@ -99,5 +99,14 @@ def account():
     :return: The account.html template with the current user's data.
     """
     if current_user.is_authenticated:
-        return render_template("account.html", active_page="account", user=current_user, now=datetime.now())
+        entries = Entry.query.filter_by(
+            user_id=current_user.id, active_record=True
+        ).all()
+        return render_template(
+            "account.html",
+            active_page="account",
+            user=current_user,
+            now=datetime.now(),
+            entries=entries,
+        )
     return redirect(url_for("users.login"))

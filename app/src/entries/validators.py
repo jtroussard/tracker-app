@@ -8,6 +8,27 @@ validate_weight(field): checks whether weight field input is three digit number
 from wtforms.validators import ValidationError
 
 
+# pylint: disable=unused-argument
+def validate_min_max_float(form, field):
+    """Validates that the input of the FloatField is within a certain range.
+
+    Args:
+        form (FlaskForm): The form that the field belongs to.
+        field (wtforms.fields.core.FloatField): The FloatField to be validated.
+
+    Raises:
+        ValidationError: If the input is greater than the max value or less than 1.0.
+    """
+    max_value = 100.0
+    min_value = 1.0
+    if field.data is not None:
+        if field.data > max_value:
+            raise ValidationError(f"Input must not exceed {max_value}")
+        if field.data < min_value:
+            raise ValidationError(f"Input must be greater than or equal to {min_value}")
+
+
+# pylint: disable=unused-argument
 def validate_weight(form, field):
     """Checks whether weight field input is three digit number with a maximum of
      one decimal place value.

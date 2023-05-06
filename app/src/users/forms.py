@@ -20,9 +20,15 @@ class RegistrationForm(FlaskForm):
         "Username",
         validators=[InputRequired(), Length(min=2, max=20), validate_username],
     )
-    first_name = StringField("First Name", validators=[InputRequired(), Length(min=2, max=50)])
-    middle_name = StringField("Middle Name", validators=[Length(min=1, max=50), validate_username])
-    last_name = StringField("Last Name", validators=[InputRequired(), Length(min=2, max=50)])
+    first_name = StringField(
+        "First Name", validators=[InputRequired(), Length(min=2, max=50)]
+    )
+    middle_name = StringField(
+        "Middle Name", validators=[Length(min=1, max=50), validate_username]
+    )
+    last_name = StringField(
+        "Last Name", validators=[InputRequired(), Length(min=2, max=50)]
+    )
     date_of_birth = DateField("Date of Birth", validators=[InputRequired()])
     email = StringField("Email", validators=[InputRequired(), Email(), validate_email])
     location = StringField("Location or Hometown", validators=[Length(min=1, max=50)])
