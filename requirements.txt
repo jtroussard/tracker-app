@@ -19,7 +19,7 @@ Flask-WTF==1.1.1
 gunicorn==20.1.0
 idna==3.4
 is-disposable-email==1.0.0
-isort==5.10.1
+isort==5.12.0
 itsdangerous==2.1.2
 Jinja2==3.1.2
 lazy-object-proxy==1.7.1
