@@ -33,7 +33,14 @@ To run unit tests, execute the following command from the root directory of the 
 To run linting using pylint, execute the following command from the root directory of the project:
 `pylint app/`
 
-## attributions
+## Screen Shots
+
+![Home page screen shot](https://user-images.githubusercontent.com/17488893/236649128-bf59156f-55e3-4cc0-bf8d-b11ed2aba2dc.png)
+![Account page screen shot](https://user-images.githubusercontent.com/17488893/236649161-be239b64-56c7-4720-94ca-2a997bc9c162.png)
+![Entries page screen shot](https://user-images.githubusercontent.com/17488893/236649173-d1129a48-59be-405c-b175-1aa14233b559.png)
+![Registration page screen shot](https://user-images.githubusercontent.com/17488893/236649178-34096d12-e427-4b0d-8647-d5aa93206ab6.png)
+
+## Attributions
 
 ### Photos
 https://www.publicdomainpictures.net/en/browse-author.php?a=87
