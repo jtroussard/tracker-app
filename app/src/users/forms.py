@@ -9,7 +9,7 @@ from wtforms import (
     SubmitField,
     DateField,
 )
-from wtforms.validators import InputRequired, Email, EqualTo, Length
+from wtforms.validators import InputRequired, Email, EqualTo, Length, Optional
 from app.src.users.validators import validate_username, validate_email
 
 
@@ -31,7 +31,7 @@ class RegistrationForm(FlaskForm):
     )
     date_of_birth = DateField("Date of Birth", validators=[InputRequired()])
     email = StringField("Email", validators=[InputRequired(), Email(), validate_email])
-    location = StringField("Location or Hometown", validators=[Length(min=1, max=50)])
+    location = StringField("Location or Hometown", validators=[Optional(strip_whitespace=True), Length(min=1, max=50)])
     password = PasswordField("Password", validators=[InputRequired()])
     confirm_password = PasswordField(
         "Confirm Password", validators=[InputRequired(), EqualTo("password")]
