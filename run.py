@@ -4,4 +4,4 @@ app = create_app()
 
 if __name__ == "__main__":
     port = app.config.get('PORT')
-    app.run(port=port, debug=True)
+    app.run(port=port)
