@@ -43,7 +43,7 @@ def update_entry(entry_id):
             form.populate_obj(entry)
             db.session.commit()
             flash("Your entry has been updated!", "success")
-            return redirect(url_for("entries.get_entry", entry_id=entry_id))
+            return redirect(url_for("entries.entry_index"))
         # else:
         #     print("Form did not validate")
         #     print(f"{form.errors}")
