@@ -6,7 +6,11 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 
 from app.config import ProductionConfig, Config
+<<<<<<< HEAD
 from app.src.filters import get_username_filter, get_month_name, get_user_fullname
+=======
+from app.src.filters import get_username_filter, get_month_name
+>>>>>>> d7adad378eb3e315334eb35d55e32672ba4f8ff0
 
 app = Flask(__name__)
 app.config.from_object(Config)
