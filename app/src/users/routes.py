@@ -17,10 +17,6 @@ from app.src.models import User
 
 users = Blueprint("users", __name__)
 
-@users.route("/test", methods=["POST", "GET"])
-def test():
-    return render_template('test.html')
-
 
 @users.route("/login", methods=["POST", "GET"])
 def login():
