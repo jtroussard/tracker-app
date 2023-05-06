@@ -10,7 +10,6 @@ def get_username_filter(current_user):
     :param current_user: The current user object from flask_login
     :return: A string.
     """
-    print(current_user)
     if current_user.is_authenticated:
         return current_user.username
     return ""
@@ -20,10 +19,6 @@ def get_month_name(month_number):
     return calendar.month_name[month_number]
 
 def get_user_fullname(name):
-    print('chicken butt')
-    print(name)
-    for k, v in name.items():
-        print(f'k: {k}, v: {v}')
     if not name['middle_name']:
         return f"{name['first_name']} {name['last_name']}"
     return f"{name['first_name']} {name['middle_name'][0:1]}. {name['last_name']}"

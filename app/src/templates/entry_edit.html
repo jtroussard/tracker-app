@@ -32,8 +32,8 @@
 
 {% block content %}
 <div class="col-md-12 container-single-form">
-    <h4 class="mb-3">Entry Form</h4>
-    <form method="POST" action="{{ url_for('entries.entry_index') }}">
+    <h4 class="mb-3">Entry Form?</h4>
+    <form method="POST" action="{{ url_for('entries.update_entry', entry_id=entry.id) }}">
       {{ form.csrf_token }}
       <div class="form-group">
         <label for="{{ form.date.id }}" class="form-label">Date</label>

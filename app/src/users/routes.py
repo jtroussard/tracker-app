@@ -30,7 +30,6 @@ def login():
     :return: The login.html template is being returned.
     """
     if current_user.is_authenticated:
-        print(vars(current_user))
         return redirect(url_for("main.home"))
     form = LoginForm()
     if form.validate_on_submit():
@@ -40,8 +39,6 @@ def login():
             flash("Login Successful", "success")
             return redirect(url_for("main.home"))
         flash("Login Failed. Please check username/password", "danger")
-        print('form good creds bad')
-    print(f'form bad {form.errors}')
     return render_template("login.html", active_page="login", form=form)
 
 

@@ -46,19 +46,15 @@
                         </div>
                         <div class="d-flex">
                             <div class="d-flex justify-content-center">
-                                
-                              </div>
-                              
-                              <a class="btn btn-lg btn-primary ml-auto mr-2"
-                              href="{{ url_for('entries.update_entry', entry_id=entry.id, entry=entry) }}">Edit</a>
-                              <a class="btn btn-lg btn-danger ml-auto mr-2"
-                                href="{{ url_for('entries.delete_entry', entry_id=entry.id) }}">Delete</a>
-
-                                <form method="POST">
-                                    <button type="submit" formmethod="GET" formaction="{{ url_for('entries.update_entry', entry_id=entry.id) }}">Update</button>
-                                    <button type="submit" formaction="{{ url_for('entries.delete_entry', entry_id=entry.id) }}">Delete</button>
-                                  </form>
-                                  
+                            </div>
+                            <form method="POST">
+                                <button class="btn btn-lg btn-primary ml-auto mr-2" type="submit" formmethod="GET"
+                                    formaction="{{ url_for('entries.update_entry', entry_id=entry.id) }}">Update</button>
+                                    <button class="btn btn-lg btn-secondary ml-auto mr-2" type="submit" formmethod="GET"
+                                    formaction="{{ url_for('entries.entry_index') }}">Cancel</button>
+                                <button class="btn btn-lg btn-danger ml-auto mr-2" type="submit"
+                                    formaction="{{ url_for('entries.delete_entry', entry_id=entry.id) }}">Delete</button>
+                            </form>
                         </div>
                     </div>
                 </div>

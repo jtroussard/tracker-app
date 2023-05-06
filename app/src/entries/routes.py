@@ -35,7 +35,7 @@ def update_entry(entry_id):
     if entry.author != current_user:
         abort(403)
     form = EntryForm(obj=entry)
-    print(f"request method is {request.method}")
+    print(f"request method is {request.method} entry {entry} form {form}")
     if request.method == "POST":
         print("log this: Request method is POST")
         if form.validate_on_submit():
