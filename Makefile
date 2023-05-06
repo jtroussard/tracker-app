@@ -19,3 +19,13 @@ reset-db:
 	else \
 		echo "Reset canceled"
 	fi
+
+create_db:
+	python3 -c "from app.src import app; from app.src import db; app.app_context().push(); db.create_all();"
+
+migrate_db:
+	export FLASK_APP=run.py && flask db migrate -m "migration via make command"
+
+upgrade_db:
+	export FLASK_APP=run.py && flask db upgrade
+
