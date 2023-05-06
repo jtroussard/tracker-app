@@ -2,14 +2,42 @@
 
 {% block styles %}
 <style>
-    /* Style for active page */
-    .nav-item.active {
-      font-weight: bold;
-    }
+  /* Style for active page */
+  .nav-item.active {
+    font-weight: bold;
+  }
 </style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cards.css') }}">
 {% endblock %}
 
 {% block content %}
-  <h1>Hello World!</h1>
-  <p>Welcome to Weight Tracker 2</p>
+<div class="jumbotron">
+  <div class="container">
+    <h1 class="display-3">Fitness Tracker</h1>
+    <p>Welcome to the super simple fitness tracker! This is intended more to be a simple journal tool for weight loss or other fitness/physical goals. It is still currently in development so there might still be some small bugs. Code for this application can be reviewed <a href="https://github.com/jtroussard/tracker-app">here</a>, contributions, and feedback greatly appreciated.</p>
+    <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 d-flex justify-content-center">
+    <div class="card greedy-card">
+      <img class="card-img-top" src="{{ url_for('static', filename='img/healthy-breakfast.jpeg') }}" alt="Healthy breakfast">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 d-flex justify-content-center">
+    <div class="card greedy-card">
+      <img class="card-img-top" src="{{ url_for('static', filename='img/stretching.jpeg') }}" alt="Lady streching outdoors">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

@@ -12,7 +12,7 @@ validate_email(email): checks whether the given email is already in use by an
 from wtforms.validators import ValidationError
 from app.src.models import User
 
-
+# pylint: disable=unused-argument
 def validate_username(form, username):
     """Validator. Checks whether the database contains an active username.
     Raises:
@@ -22,7 +22,7 @@ def validate_username(form, username):
     if user:
         raise ValidationError("That username is already in use. Please choose another.")
 
-
+# pylint: disable=unused-argument
 def validate_email(form, email):
     """Validator. Checkes whether the database contains an active email address.
     Raises:

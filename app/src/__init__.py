@@ -1,4 +1,4 @@
-# pylint: disable=wrong-import-position, missing-module-docstring, no-member
+# pylint: disable=wrong-import-position, missing-module-docstring, no-member, import-outside-toplevel
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -8,7 +8,12 @@ from flask_migrate import Migrate
 
 
 from app.config import ProductionConfig, Config
-from app.src.filters import get_username_filter, get_month_name, get_user_fullname
+from app.src.filters import (
+    get_username_filter,
+    get_month_name,
+    get_user_fullname,
+    get_pretty_date,
+)
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -18,11 +23,13 @@ bcrypt = Bcrypt()
 login_manager = LoginManager()  # Handles sessions
 migrate = Migrate()
 
+
 # Don't forget to set the env when going prod, including the base config variables.
 def create_app(config_class=Config):
     app.jinja_env.filters["get_username_filter"] = get_username_filter
     app.jinja_env.filters["get_month_name"] = get_month_name
     app.jinja_env.filters["get_user_fullname"] = get_user_fullname
+    app.jinja_env.filters["get_pretty_date"] = get_pretty_date
 
     db.init_app(app)
     bcrypt.init_app(app)

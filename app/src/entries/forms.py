@@ -10,13 +10,13 @@ from wtforms import (
     FloatField,
     IntegerField,
 )
-from wtforms.validators import InputRequired
+from wtforms.validators import InputRequired, Optional
 from app.src.constants.choices import (
     TIME_OF_DAY_CHOICES,
     MOOD_CHOICES,
     STATUS_CHOICES,
 )
-from app.src.entries.validators import validate_weight
+from app.src.entries.validators import validate_weight, validate_min_max_float
 
 
 class EntryForm(FlaskForm):
@@ -28,7 +28,9 @@ class EntryForm(FlaskForm):
     )
     mood = SelectField("Mood", choices=MOOD_CHOICES)
     status = SelectField("Status", choices=STATUS_CHOICES)
-    weight = FloatField("Weight", validators=[validate_weight, InputRequired()])
-    measurement_waist = FloatField("Waist")
-    keto = IntegerField("Ketosis Level")
+    weight = FloatField("Weight", validators=[InputRequired(), validate_weight])
+    measurement_waist = FloatField(
+        "Waist", validators=[Optional(strip_whitespace=True), validate_min_max_float]
+    )
+    keto = IntegerField("Ketosis Level", validators=[Optional(strip_whitespace=True)])
     submit = SubmitField("Save")

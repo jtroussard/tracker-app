@@ -1,0 +1,30 @@
+.greedy-card {
+  width: 95%;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.card-body-block {
+  display: block;
+  text-align: center;
+}
+
+
+.card-body .circle-img {
+  margin-top: 20px;
+  /* adjust as needed */
+}
+
+.card-body-no-flex-popo {
+  display: block;
+}
+
+.card-account-title {
+  margin-top: 1rem !important;
+  margin-bottom: 1rem !important;
+}
