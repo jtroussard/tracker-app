@@ -2,35 +2,26 @@
 
 {% block styles %}
 <style>
-  /* Style for active page */
-  .nav-item.active {
-    font-weight: bold;
+  .bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 
-  /* Card Styling */
-  .card {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-  }
-
-  .card:hover {
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-    transform: translateY(-5px);
-  }
-
-  .card-link+.card-link {
-    margin-left: 0;
-    /* turn off margin */
-  }
-
-  /* Button Styling */
-  button label {
-    margin: 0;
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
   }
 </style>
-{% endblock %}
+{% endblock%}
+
 
 {% block content %}
+<<<<<<< HEAD
 <div class="content">
   <h1>Tracker Page!</h1>
   <div>
@@ -88,8 +79,53 @@
       </div>
     </div>
   </div>
+=======
+
+<div class="container">
+  <div class="py-5 text-center">
+    <img class="mb-4 mx-auto d-block" src="{{ url_for('static', filename='icons/weighing-scale.png') }}" alt=""
+      width="72" height="57">
+    <h2>Tracker Entry Journal</h2>
+    <p class="lead">Track your progress by adding entries to your tracker journal by submitting this form.</p>
+  </div>
+
+>>>>>>> eecca5a (wrapping up ui work, adds cancel button)
   <div class="row">
-    <div class="col-md-8">
+
+    <!-- ENTRY HISTORY -->
+    <div class="col-md-6 order-md-2 mb-4">
+      <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <span>
+          <h4>Journal Entries</h4>
+          </Journal>
+        </span>
+        <span class="badge badge-secondary badge-pill">{{ entries|length }}</span>
+      </h4>
+      {% if not entries %}
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">You do not have any journal entries yet.</h5>
+          <p class="card-text">Let's start receording your progress by making an entry today!</p>
+        </div>
+      </div>
+      {% else %}
+      {% for entry in entries %}
+      <a href="{{ url_for('entries.get_entry', entry_id=entry.id) }}" class="card-link">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">{{ entry.date.date() }} - {{ entry.time_of_day|capitalize }}</h5>
+            <p class="card-text">Weight: {{ entry.weight }}</p>
+            <p class="card-text">Ketosis Level: {{ entry.keto }}</p>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+      {% endif %}
+    </div>
+
+    <!-- ENTRY FORM -->
+    <div class="col-md-6 order-md-1">
+      <h4 class="mb-3">Entry Form</h4>
       <form method="POST" action="{{ url_for('entries.entry_index') }}">
         {{ form.csrf_token }}
         <div class="form-group">
@@ -155,25 +191,12 @@
           {{ error }}
         </div>
         {% endfor %}
-        {{ form.submit(class="btn btn-outline-info") }}
+        <div class="form-group">
+          {{ form.submit(class="w-100 btn btn-lg btn-primary") }}
+        </div>
       </form>
-    </div>
-    <div class="col-md-4">
-      <div class="d-flex flex-column">
-        {% for entry in entries %}
-        <a href="{{ url_for('entries.get_entry', entry_id=entry.id) }}" class="card-link">
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">{{ entry.date.date() }} - {{ entry.time_of_day|capitalize }}</h5>
-              <p class="card-text">Weight: {{ entry.weight }}</p>
-              <p class="card-text">Ketosis Level: {{ entry.keto }}</p>
-            </div>
-          </div>
-        </a>
-        {% endfor %}
-      </div>
     </div>
   </div>
 </div>
-</div>
+<div><small>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik"> Freepik </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></small></div>
 {% endblock %}

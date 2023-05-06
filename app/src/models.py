@@ -43,11 +43,16 @@ class User(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
+    first_name = db.Column(db.String(50), unique=False, nullable=False)
+    middle_name = db.Column(db.String(50), unique=False, nullable=True)
+    last_name = db.Column(db.String(50), unique=False, nullable=False)
+    date_of_birth = db.Column(db.Date, nullable=False) # age validation needed
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default="default.jpg")
     password = db.Column(db.String(60), nullable=False)
-    entry = db.relationship("Entry", backref="author", lazy="select")
+    joined_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     active_record = db.Column(db.Boolean(), nullable=False, default=True)
+    entry = db.relationship("Entry", backref="author", lazy="select")
 
     def __repr__(self):
         """
