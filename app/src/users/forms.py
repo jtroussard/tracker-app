@@ -24,7 +24,7 @@ class RegistrationForm(FlaskForm):
         "First Name", validators=[InputRequired(), Length(min=2, max=50)]
     )
     middle_name = StringField(
-        "Middle Name", validators=[Length(min=1, max=50), validate_username]
+        "Middle Name", validators=[Optional(strip_whitespace=True), Length(min=1, max=50)]
     )
     last_name = StringField(
         "Last Name", validators=[InputRequired(), Length(min=2, max=50)]
