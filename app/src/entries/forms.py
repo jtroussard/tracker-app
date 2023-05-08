@@ -32,5 +32,5 @@ class EntryForm(FlaskForm):
     measurement_waist = FloatField(
         "Waist", validators=[Optional(strip_whitespace=True), validate_min_max_float]
     )
-    keto = IntegerField("Ketosis Level", validators=[Optional(strip_whitespace=True)])
+    keto = IntegerField("Ketosis Level", validators=[Optional(strip_whitespace=True), validate_min_max_float])
     submit = SubmitField("Save")
