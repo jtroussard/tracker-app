@@ -6,7 +6,7 @@ try:
     with open("/etc/tracker_app-config.json") as config_file:
         config = json.load(config_file)
 except FileNotFoundError:
-    with open(os.path.join(os.path.dirname(__file__), "default.json")) as config_file:
+    with open(os.path.join(os.path.dirname(__file__), "default-psql.json")) as config_file:
         config = json.load(config_file)
 
 
