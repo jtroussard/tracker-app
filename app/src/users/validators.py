@@ -10,7 +10,8 @@ validate_email(email): checks whether the given email is already in use by an
     unique.
 """
 from wtforms.validators import ValidationError
-from app.src.models import User
+from app.src.models import Member
+
 
 # pylint: disable=unused-argument
 def validate_username(form, username):
@@ -18,9 +19,10 @@ def validate_username(form, username):
     Raises:
         ValidationError: Non unique input
     """
-    user = User.query.filter_by(username=username.data, active_record=True).first()
+    user = Member.query.filter_by(username=username.data, active_record=True).first()
     if user:
         raise ValidationError("That username is already in use. Please choose another.")
+
 
 # pylint: disable=unused-argument
 def validate_email(form, email):
@@ -28,6 +30,6 @@ def validate_email(form, email):
     Raises:
     ValidationError: Non unique input
     """
-    user = User.query.filter_by(email=email.data, active_record=True).first()
+    user = Member.query.filter_by(email=email.data, active_record=True).first()
     if user:
         raise ValidationError("That email is already in use. Please choose another.")

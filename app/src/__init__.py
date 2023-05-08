@@ -23,6 +23,10 @@ bcrypt = Bcrypt()
 login_manager = LoginManager()  # Handles sessions
 migrate = Migrate()
 
+# import logging
+# logging.basicConfig()
+# logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+
 
 # Don't forget to set the env when going prod, including the base config variables.
 def create_app(config_class=Config):
@@ -43,4 +47,6 @@ def create_app(config_class=Config):
     app.register_blueprint(users)
     app.register_blueprint(entries)
     app.register_blueprint(main)
+
+    print(f"YOUR RUNNING THIS APP IN {app.config['ENV']} ENV")
     return app
