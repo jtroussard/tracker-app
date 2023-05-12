@@ -2,6 +2,7 @@
 # cheater_scripts.txt
 .DS_Store
 weight_tracker/.DS_Store
+backups/
 
 # IDE
 .vscode/

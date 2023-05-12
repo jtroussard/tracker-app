@@ -1,0 +1,2 @@
+[run]
+omit = tests/*, app/config/*, app/constants/*, app/utils/development.py, app/*/__init__.py, app/users/validators.py, app/entries/validators.py

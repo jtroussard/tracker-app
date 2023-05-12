@@ -1,0 +1,20 @@
+class TestingConfig:
+    ENV = "testing"
+    TESTING = True
+    PORT = 12031
+    SQLALCHEMY_DATABASE_URI = "sqlite:///test.db"
+    # SERVER_NAME = 'localhost:localdomain'
+    SECRET_KEY = "your-secret-key"
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    WTF_CSRF_ENABLED = False
+    LOGIN_DISABLED = True
+    # SESSION_COOKIE_NAME = 'testing-session'
+    # SESSION_COOKIE_HTTPONLY = True
+    # SESSION_COOKIE_SECURE = False
+    # SESSION_COOKIE_SAMESITE = 'Lax'
+    MAX_CONTENT_LENGTH = 16 * 1024 * 1024
+    # JSON_SORT_KEYS = True
+    JSONIFY_PRETTYPRINT_REGULAR = False
+    JSONIFY_MIMETYPE = "application/json"
+    PROPAGATE_EXCEPTIONS = True
+    DEBUG = False

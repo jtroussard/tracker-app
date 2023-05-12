@@ -10,7 +10,7 @@ from wtforms import (
     DateField,
 )
 from wtforms.validators import InputRequired, Email, EqualTo, Length, Optional
-from app.src.users.validators import validate_username, validate_email
+from app.users.validators import validate_username, validate_email
 
 
 class RegistrationForm(FlaskForm):

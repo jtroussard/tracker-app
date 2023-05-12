@@ -1,21 +1,39 @@
+# Testing
+Console printer for unittest
+```python
+    def test_print_statements(self):
+        # Perform actions that trigger print statements in models.py
+        # ...
+
+        # Access the captured print statements from the log buffer
+        for log in self.log_buffer:
+            print(log)
+```
+
 # App
+
 ## Running App Local Development
+
 ```bash
 python run.py
 ```
+
 # Database
+
 ## Checking users live
->>> from run import app
->>> from app.src import db
->>> from app.src.models import User, Entry
->>> app.app_context().push()
->>> User.query.all()
+
+> > > from run import app
+> > > from app.src import db
+> > > from app.src.models import User, Entry
+> > > app.app_context().push()
+> > > User.query.all()
 
 ## Running database from python shell
+
 ```python
-from app.src import app
-from app.src import db
-from app.src.models import User, Entry
+from app import app
+from app import db
+from app.models import Member, Entry
 app.app_context().push()
 db.drop_all()
 db.create_all()
@@ -275,13 +293,18 @@ Entry.query.all()
 ```
 
 # Linter
+
 ## Running linter manually from command line
+
 Get into project root and run
-*For full project*
+_For full project_
+
 ```bash
 pylint weight_tracker
 ```
-*For individual files*
+
+_For individual files_
+
 ```bash
 pylint weight_tracker/models.py
 ```

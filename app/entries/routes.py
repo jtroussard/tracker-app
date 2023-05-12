@@ -10,9 +10,9 @@ Routes:
 """
 from flask import render_template, redirect, url_for, flash, abort, request, Blueprint
 from flask_login import login_required, current_user
-from app.src import db
-from app.src.entries.forms import EntryForm
-from app.src.models import Entry
+from app import db
+from app.entries.forms import EntryForm
+from app.models import Entry
 
 entries = Blueprint("entries", __name__)
 
@@ -35,7 +35,6 @@ def update_entry(entry_id):
     if entry.author != current_user:
         abort(403)
     form = EntryForm(obj=entry)
-    print(f"request method is {request.method} entry {entry} form {form}")
     if request.method == "POST":
         print("log this: Request method is POST")
         if form.validate_on_submit():
