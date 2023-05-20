@@ -1,7 +1,7 @@
 .PHONY: test coverage clean reset-db cypresstests
 
 test:
-	pytest
+	pytest -s --cov-report=html --cov=app/ --cov-config=.coveragerc
 
 test-no-cov:
 	pytest --cov=app --no-cov

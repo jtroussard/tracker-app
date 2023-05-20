@@ -10,7 +10,7 @@ validate_email(email): checks whether the given email is already in use by an
     unique.
 """
 from wtforms.validators import ValidationError
-from app.src.models import Member
+from app.models import Member
 
 
 # pylint: disable=unused-argument

@@ -1,8 +1,0 @@
-{
-    "CSRF_ENABLED": true,
-    "SECRET_KEY":"whateverdude",
-    "TESTING": true,
-    "PORT": "8888",
-    "SQLALCHEMY_DATABASE_URI": "postgresql://coco:password@localhost:5432/mydatabase",
-    "SQLALCHEMY_TRACK_MODIFICATIONS": false
-}

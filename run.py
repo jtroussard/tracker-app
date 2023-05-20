@@ -1,8 +1,7 @@
-from app.src import create_app
+from app import create_app
+from app.config.dev_config import DevConfig
 
-app = create_app()
+app = create_app(DevConfig)
 
 if __name__ == "__main__":
-    port = app.config.get("PORT")
-    debug = app.config.get("DEBUG")
-    app.run(port=port, debug=debug)
+    app.run(debug=app.config["DEBUG"], port=app.config["PORT"])
