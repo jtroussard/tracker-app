@@ -80,6 +80,9 @@ def create_app(config_class):
     login_manager.login_view = "users.login"
     migrate.init_app(app, db)
 
+    # Setup logger
+    logger = setup_logger()
+
     # Register blueprints
     from app.main.routes import main
     from app.users.routes import users
