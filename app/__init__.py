@@ -10,7 +10,6 @@ Functions:
     create_app(config_class): Creates a Flask application.
     register_filters(app): Registers filters with the Flask application.
 """
-
 import logging
 from logging.handlers import RotatingFileHandler
 from flask import Flask
@@ -26,21 +25,21 @@ bcrypt = Bcrypt()
 login_manager = LoginManager()
 migrate = Migrate()
 
-def setup_logger():
-    logger = logging.getLogger()
-    logger.setLevel(logging.INFO)
 
-    # Create a rotating file handler to log messages to a file
-    file_handler = RotatingFileHandler('tracker-app-logger.log', maxBytes=1024 * 1024 * 10, backupCount=5)
-    file_handler.setFormatter(logging.Formatter('%(asctime)s [%(levelname)s] %(module)s - %(message)s'))
-    logger.addHandler(file_handler)
+def configure_logging():
+    # Create a formatter
+    formatter = "[%(asctime)s] [%(levelname)s] [%(message)s]"
 
-    # Create a stream handler to log messages to the console
-    stream_handler = logging.StreamHandler()
-    stream_handler.setFormatter(logging.Formatter('[%(levelname)s] %(message)s'))
-    logger.addHandler(stream_handler)
+    # register root logging
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format=formatter,
+        handlers=[
+            RotatingFileHandler("./logs/flask.log", maxBytes=1048576, backupCount=5)
+        ],
+    )
+    logging.getLogger("werkzeug").setLevel(logging.INFO)
 
-    return logger
 
 def register_filters(app):
     """Registers filters with the Flask application.
@@ -69,9 +68,9 @@ def create_app(config_class):
         The Flask application.
     """
     app = Flask(__name__)
-    logger = setup_logger()
+    configure_logging()
     app.config.from_object(config_class)
-    logger.info(f"Loaded config class: {config_class}")
+    app.logger.info(f"Creating app with config: {config_class.__name__}")
     register_filters(app)
 
     db.init_app(app)
@@ -91,8 +90,5 @@ def create_app(config_class):
     app.register_blueprint(users)
     app.register_blueprint(entries)
     app.register_blueprint(main)
-
-    # Log a message
-    logger.info("Flask application initialized.")
 
     return app

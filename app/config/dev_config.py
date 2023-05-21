@@ -4,3 +4,4 @@ class DevConfig:
     PORT = 12031
     SQLALCHEMY_DATABASE_URI = "sqlite:///dev.db"
     SECRET_KEY = "dslfjadsfkjldsa"
+    
