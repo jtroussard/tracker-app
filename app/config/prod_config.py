@@ -1,9 +1,7 @@
 # Desc: Production configuration file for the Flask application.
 from decouple import Config, RepositoryEnv
-from app import logger
 
 DOTENV_FILE = '/path/to/.env'
-logger.info(f"Loading environment variables from {DOTENV_FILE}")
 env_config = Config(RepositoryEnv(DOTENV_FILE))
 
 class ProdConfig:
