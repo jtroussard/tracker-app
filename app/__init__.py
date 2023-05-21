@@ -11,6 +11,8 @@ Functions:
     register_filters(app): Registers filters with the Flask application.
 """
 
+import logging
+from logging.handlers import RotatingFileHandler
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
@@ -24,6 +26,21 @@ bcrypt = Bcrypt()
 login_manager = LoginManager()
 migrate = Migrate()
 
+def setup_logger():
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+
+    # Create a rotating file handler to log messages to a file
+    file_handler = RotatingFileHandler('app.log', maxBytes=1024 * 1024 * 10, backupCount=5)
+    file_handler.setFormatter(logging.Formatter('%(asctime)s [%(levelname)s] %(module)s - %(message)s'))
+    logger.addHandler(file_handler)
+
+    # Create a stream handler to log messages to the console
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(logging.Formatter('[%(levelname)s] %(message)s'))
+    logger.addHandler(stream_handler)
+
+    return logger
 
 def register_filters(app):
     """Registers filters with the Flask application.
@@ -53,6 +70,7 @@ def create_app(config_class):
     """
     app = Flask(__name__)
     app.config.from_object(config_class)
+    logger.info(f"Loaded config class: {config_class}")
     register_filters(app)
 
     db.init_app(app)
@@ -60,6 +78,9 @@ def create_app(config_class):
     login_manager.init_app(app)
     login_manager.login_view = "users.login"
     migrate.init_app(app, db)
+
+    # Setup logger
+    logger = setup_logger()
 
     # Register blueprints
     from app.main.routes import main
@@ -69,5 +90,8 @@ def create_app(config_class):
     app.register_blueprint(users)
     app.register_blueprint(entries)
     app.register_blueprint(main)
+
+    # Log a message
+    logger.info("Flask application initialized.")
 
     return app
