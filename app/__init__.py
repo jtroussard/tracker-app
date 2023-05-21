@@ -31,7 +31,7 @@ def setup_logger():
     logger.setLevel(logging.INFO)
 
     # Create a rotating file handler to log messages to a file
-    file_handler = RotatingFileHandler('app.log', maxBytes=1024 * 1024 * 10, backupCount=5)
+    file_handler = RotatingFileHandler('tracker-app-logger.log', maxBytes=1024 * 1024 * 10, backupCount=5)
     file_handler.setFormatter(logging.Formatter('%(asctime)s [%(levelname)s] %(module)s - %(message)s'))
     logger.addHandler(file_handler)
 
@@ -69,6 +69,7 @@ def create_app(config_class):
         The Flask application.
     """
     app = Flask(__name__)
+    logger = setup_logger()
     app.config.from_object(config_class)
     logger.info(f"Loaded config class: {config_class}")
     register_filters(app)
