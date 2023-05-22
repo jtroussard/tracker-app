@@ -44,4 +44,3 @@ To run linting using pylint, execute the following command from the root directo
 
 ### Photos
 https://www.publicdomainpictures.net/en/browse-author.php?a=87
-https://www.publicdomainpictures.net/en/browse-author.php?a=113279
