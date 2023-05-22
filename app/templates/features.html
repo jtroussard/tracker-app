@@ -1,0 +1,77 @@
+{% extends 'layout.html' %}
+
+{% block styles %}
+<style>
+    /* Style for active page */
+    .nav-item.active {
+        font-weight: bold;
+    }
+
+    .card {
+        transition: background-image 0.5s ease;
+    }
+
+    .content-block {
+    margin: 20px;
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+.sixteen-nine-ratio {
+        width: 100%;
+        height: 0;
+        padding-bottom: 30%; /* 16:9 aspect ratio (9 divided by 16 multiplied by 100) */
+        position: relative;
+    }
+
+    .sixteen-nine-ratio img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cards.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    <div class="container text-center pb-3">
+        <h1 class="display-3">What's New @ Fitness Tracker</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 d-flex justify-content-center sixteen-nine-ratio">
+            <img class="card-img-top" src="{{ url_for('static', filename='img/features_banner_img.jpeg') }}"
+                alt="Quote Banner Image">
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-4 d-flex justify-content-center">
+            <div class="content-block">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt explicabo accusantium earum ipsam id
+                    odit et exercitationem deserunt minima, nobis blanditiis, repudiandae distinctio ullam doloribus,
+                    fugiat velit esse quas animi.</p>
+            </div>
+        </div>
+        <div class="col-md-4 d-flex justify-content-center">
+            <div class="content-block">
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. In officiis natus aspernatur quisquam iure
+                    ipsa voluptate molestiae exercitationem consequatur aliquid maxime iusto, ratione debitis similique
+                    possimus repellendus. Magnam, dolores facilis.</p>
+            </div>
+        </div>
+        <div class="col-md-4 d-flex justify-content-center">
+            <div class="content-block">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur culpa aliquid maxime molestiae, natus
+                    eaque aperiam? Maiores mollitia ducimus accusamus! Praesentium necessitatibus vero, voluptatem nam
+                    architecto corrupti eos! Quis, perferendis!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+{% endblock %}
