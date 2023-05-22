@@ -27,4 +27,7 @@ upgrade_db:
 backup:
 	pg_dump -U $(username) $(database) > instance/backup.sql
 
+lint:
+	pylint --rcfile=.pylintrc --recursive=y app/
+
 

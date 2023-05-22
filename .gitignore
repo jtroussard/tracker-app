@@ -1,8 +1,10 @@
 # Custom Ignores
-# cheater_scripts.txt
 .DS_Store
 weight_tracker/.DS_Store
 backups/
+
+# Redis
+dump.rdb
 
 # IDE
 .vscode/
