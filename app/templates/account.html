@@ -144,17 +144,15 @@
                   <td>{{ entry.time_of_day }}</td>
                   <td>{{ entry.weight }}</td>
                   <td>
-                    {% if loop.previtem is defined and entry.weight is defined and loop.previtem.weight is defined %}
-                    {% if loop.previtem.weight > entry.weight %}
-                    <i data-feather="arrow-down-circle" class="size-18 green"></i>
-                    {% elif loop.previtem.weight < entry.weight %} 
+                    {% if entry.weight_difference == 1 %}
                     <i data-feather="arrow-up-circle" class="size-18 red"></i>
-                      {% else %}
-                      <i data-feather="minus" class="size-18 yellow"></i>
-                      {% endif %}
-                      {% else %}
-                      <i data-feather="alert-circle" class="size-18 black"></i>
-                      {% endif %}
+                    {% elif entry.weight_difference == 0 %}
+                    <i data-feather="minus" class="size-18 yellow"></i>
+                    {% elif entry.weight_difference == -1 %}
+                    <i data-feather="arrow-down-circle" class="size-18 green"></i>
+                    {% else %}
+                    <i data-feather="alert-circle" class="size-18 black"></i>
+                    {% endif %}
                   </td>
                 </tr>
                 {% endfor %}

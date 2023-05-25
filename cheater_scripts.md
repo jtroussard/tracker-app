@@ -22,11 +22,11 @@ python run.py
 
 ## Checking users live
 
-> > > from run import app
-> > > from app.src import db
-> > > from app.src.models import User, Entry
-> > > app.app_context().push()
-> > > User.query.all()
+from run import app
+from app import db
+from app.models import User, Entry
+app.app_context().push()
+User.query.all()
 
 ## Running database from python shell
 

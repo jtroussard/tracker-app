@@ -88,6 +88,35 @@ class Entry(db.Model):
     keto = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey("member.id"), nullable=False)
     active_record = db.Column(db.Boolean(), nullable=False, default=True)
+    weight_difference = db.Column(db.Integer, nullable=False, default=0)
+
+    def calculate_weight_difference(self):
+        # Get the previous entry based on the date
+        previous_entry = (
+            Entry.query.filter(
+                Entry.date < self.date,
+                Entry.user_id == self.user_id,
+                Entry.active_record.is_(True),
+            )
+            .order_by(Entry.date.desc())
+            .first()
+        )
+
+        if previous_entry:
+            if self.weight > previous_entry.weight:
+                self.weight_difference = 1  # Gain
+            elif self.weight < previous_entry.weight:
+                self.weight_difference = -1  # Loss
+            else:
+                self.weight_difference = 0  # No change
+        else:
+            self.weight_difference = 0  # No change for the first entry
+
+    def save(self):
+        # Calculate the weight difference before saving
+        self.calculate_weight_difference()
+        db.session.add(self)
+        db.session.commit()
 
     def __repr__(self):
         """Returns a string representation of the entry."""

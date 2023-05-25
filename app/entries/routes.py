@@ -88,10 +88,11 @@ def entry_index():
                 keto=form.keto.data,
                 user_id=current_user.id,
             )
-            db.session.add(entry)
-            db.session.commit()
-            flash(f"You have submitted entry: {entry}", "success")
+            entry.save()
+            flash("Entry Saved!", "success")
             return redirect(url_for("entries.entry_index"))
+        else:
+            flash("Something went wrong, Entry Not Saved!", "warning")
         return render_template(
             "entry_index.html",
             active_page="entry",

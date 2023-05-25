@@ -6,7 +6,7 @@ Routes:
     home(): Renders the home page.
 """
 import logging
-from flask import Blueprint, render_template, current_app
+from flask import Blueprint, render_template
 
 LOG = logging.getLogger(__name__)
 
@@ -20,14 +20,17 @@ def home():
     LOG.info("Logging is working")
     return render_template("home.html", active_page="home")
 
+
 @main.route("/home/receipe")
 def receipe():
     """Renders the receipe of the week page."""
     return render_template("receipe.html", active_page="home")
 
+
 @main.route("/home/quote")
 def quote():
     return render_template("quote.html", active_page="home")
+
 
 @main.route("/home/features")
 def features():

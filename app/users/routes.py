@@ -1,3 +1,5 @@
+# pylint: disable=wrong-import-position, missing-module-docstring, line-too-long
+
 """
 This module contains the routes for handling user authentication and management.
 
@@ -13,6 +15,12 @@ The routes in this module require the user to be authenticated, except for the
 user to the login page.
 """
 from datetime import datetime
+import logging
+
+LOG = logging.getLogger(__name__)
+
+from sqlalchemy import desc
+
 from flask import render_template, redirect, url_for, flash, Blueprint
 from flask_login import login_required, login_user, current_user, logout_user
 from app import db, bcrypt
@@ -40,6 +48,7 @@ def login():
     form = LoginForm()
 
     # If the form is submitted and valid, try to log the user in.
+    # pylint: disable=no-else-return
     if form.validate_on_submit():
         user = Member.query.filter_by(email=form.email.data, active_record=True).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
@@ -104,6 +113,9 @@ def register():
         db.session.commit()
         logout_user()
         flash("Your account has been created. You may now login.", "success")
+        LOG.info(
+            "New user registered: %s, %s", form.username.data, Member.query.count()
+        )
         return redirect(url_for("users.login"))
 
     # Otherwise, render the register template.
@@ -125,7 +137,11 @@ def account():
         return redirect(url_for("users.login"))
 
     # Get the user's entries.
-    entries = Entry.query.filter_by(user_id=current_user.id, active_record=True).all()
+    entries = (
+        Entry.query.filter_by(user_id=current_user.id, active_record=True)
+        .order_by(desc(Entry.date))
+        .all()
+    )
 
     # Render the account template.
     return render_template(
