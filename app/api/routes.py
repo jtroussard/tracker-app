@@ -3,6 +3,7 @@ from flask_login import current_user
 
 from app import limiter
 from app.models import Entry
+from app.decorators import restrict_access
 
 api = Blueprint("api", __name__, url_prefix="/api")
 
