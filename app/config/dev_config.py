@@ -3,7 +3,7 @@ class DevConfig:
     DEBUG = True
     PORT = 12031
     TESTING = False
-    SQLALCHEMY_DATABASE_URI = "postgresql://coco:password@localhost:5432/mydatabase"
+    SQLALCHEMY_DATABASE_URI = "postgresql://coco:password@localhost:5432/tracker_db_dev"
     SECRET_KEY = "dslfjadsfkjldsa"
     REDIS_HOST = "localhost"
     REDIS_PORT = 6379
@@ -14,6 +14,6 @@ class DevConfig:
 
 
 # log in command:
-# psql -U coco -d my_database -h localhost -p 5432
+# psql -U coco -d tracker_db_dev -h localhost -p 5432
 # connection string:
 # postgresql://coco:password@localhost:5432/my_database

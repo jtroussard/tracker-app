@@ -49,6 +49,7 @@ class Member(db.Model, UserMixin):
     joined_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     active_record = db.Column(db.Boolean(), nullable=False, default=True)
     entry = db.relationship("Entry", backref="author", lazy="select")
+    role = db.Column(db.String(50), default="user")
 
     def __repr__(self):
         """Returns a string representation of the member."""

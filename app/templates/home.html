@@ -22,17 +22,21 @@
       other fitness/physical goals. It is still currently in development so there might still be some small bugs. Code
       for this application can be reviewed <a href="https://github.com/jtroussard/tracker-app">here</a>, contributions,
       and feedback greatly appreciated.</p>
-    <p><a class="btn btn-primary btn-lg" href="https://github.com/jtroussard/tracker-app" role="button" target="_blank">Learn more »</a></p>
+    <p><a class="btn btn-primary btn-lg" href="https://github.com/jtroussard/tracker-app" role="button"
+        target="_blank">Learn more »</a></p>
   </div>
 </div>
 <div class="row">
   <div class="col-md-4 d-flex justify-content-center">
     <div class="card greedy-card">
-      <img class="card-img-top" src="{{ url_for('static', filename='img/healthy_breakfast-1.jpeg') }}"
+      {% set subject = 'breakfast' %}
+      {% set picture_string = get_img_string('main', subject) %}
+      <img class="card-img-top" src="{{ url_for('static', filename='img/main/' ~ subject ~ '/' ~ picture_string ~ '.jpeg') }}"
         alt="Healthy breakfast">
       <div class="card-body">
         <h5 class="card-title">Receipe of the Week</h5>
-        <p class="card-text">A new receipe link every week to give you inspritation in the kitchen as well as in the gym.
+        <p class="card-text">A new receipe link every week to give you inspritation in the kitchen as well as in the
+          gym.
         </p>
         <a href="{{ url_for('main.receipe') }}" class="btn btn-primary">Weekly Receipe</a>
       </div>
@@ -42,9 +46,11 @@
   <div class="col-md-4 d-flex justify-content-center">
     <div class="card greedy-card">
 
-      {% set random_image_index = range(10)|random %}
-      <img class="card-img-top" src="{{ url_for('static', filename='img/yoga-' ~ random_image_index ~ '.jpeg') }}"
-        alt="Yoga outdoors">
+      {% set blueprint = 'fitness' %}
+      {% set subject = 'fitness' %}
+      {% set picture_string = get_img_string('main', subject) %}
+      <img class="card-img-top" src="{{ url_for('static', filename='img/main/' ~ subject ~ '/' ~ picture_string ~ '.jpeg') }}"
+        alt="Fitness Picture">
       <div class="card-body d-flex flex-column">
         <h5 class="card-title">Fitness Quote of the Day</h5>
         <p class="card-text">Daily quote to help gain some perspective on your journey.</p>
@@ -58,7 +64,9 @@
 
   <div class="col-md-4 d-flex justify-content-center">
     <div class="card greedy-card">
-      <img class="card-img-top" src="{{ url_for('static', filename='img/discovery.jpeg') }}"
+      {% set subject = 'discovery' %}
+      {% set picture_string = get_img_string('main', subject) %}
+      <img class="card-img-top" src="{{ url_for('static', filename='img/main/' ~ subject ~ '/' ~ picture_string ~ '.jpeg') }}"
         alt="Lady stretching outdoors">
       <div class="card-body">
         <h5 class="card-title">What's new with Fitness Tracker?</h5>

@@ -8,6 +8,8 @@ Routes:
 import logging
 from flask import Blueprint, render_template
 
+from app.utils.internal_functions import get_img_string
+
 LOG = logging.getLogger(__name__)
 
 main = Blueprint("main", __name__)
@@ -18,7 +20,7 @@ main = Blueprint("main", __name__)
 def home():
     """Renders the home page."""
     LOG.info("Logging is working")
-    return render_template("home.html", active_page="home")
+    return render_template("home.html", active_page="home", get_img_string=get_img_string)
 
 
 @main.route("/home/receipe")
