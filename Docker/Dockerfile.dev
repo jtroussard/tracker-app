@@ -1,0 +1,22 @@
+FROM python:3.8-slim-buster
+
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    libpq-dev
+
+# Copy the application code
+COPY . /app
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose the application port
+EXPOSE 12031
+
+# Environment variables. This is set to make the app factory pattern work in development env `flask run`
+ENV FLASK_APP=run.py
+
+# Run the application
+CMD ["flask", "run", "--host", "0.0.0.0", "--port", "12031"]

@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+  postgres:
+    container_name: database_tracker
+    image: postgres:latest
+    restart: on-failure:3
+    ports:
+      - '5433:5432'
+    environment:
+      POSTGRES_USER: lester
+      POSTGRES_PASSWORD: green
+      POSTGRES_DB: dockertestdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: console_tracker
+    image: dpage/pgadmin4:latest
+    restart: on-failure:3
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@domain.com
+      PGADMIN_DEFAULT_PASSWORD: secret
+    ports:
+      - 80:80
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+  flask_app:
+    container_name: fitness_app
+    image: tracker-app:latest
+    restart: on-failure:3
+    depends_on:
+      - postgres
+    ports:
+      - '12031:12031'
+    environment:
+      - FLASK_ENV=development
+    volumes:
+      - ./container_logs:/app/../logs
+
+
+volumes:
+  postgres_data:
+  pgadmin_data:

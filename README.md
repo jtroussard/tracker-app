@@ -44,3 +44,23 @@ To run linting using pylint, execute the following command from the root directo
 
 ### Photos
 https://www.publicdomainpictures.net/en/browse-author.php?a=87
+
+## Where I left off/Things I need to attend to
+* LEFT OFF: got the migration from flask container to db container working, migrate said out of date so i just ran upgrade, checked the db container looks ok went to app added user logged in added entry. looks good. need to finish crud tests then review the dev env configs and figure out the volume stuff.
+
+* figure out volumes
+* crud tests in dev
+* cron in db container for back ups
+
+* another bug - saving entry shows success and warn at the same time
+
+* confirm authentication method for postgresql (need version number, then check pg_hba.conf)
+* I think the db user set in the compose file is the power user, so make sure that the db init scripts create the limited user for the app and that matches what is in the app configuration, DONT accidentally set it to the power user.
+
+## Headaches for me (Delete when pipeline and base features are done)
+### When I run the docker container of this application alone I can't connect via the browser
+* check logs to make sure the app started without errors: `docker logs "container name"
+* if there are no errors make sure the docker run command adds the port mapping to the exposed port then try again
+
+## Useful commands to remember
+*docker-compose -f ./Docker/docker-compose.dev.yml up -d

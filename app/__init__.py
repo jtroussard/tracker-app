@@ -30,27 +30,42 @@ migrate = Migrate()
 limiter = Limiter(key_func=get_remote_address)
 redis_client = FlaskRedis()
 
+def get_config_class(environment):
+    """Get the configuration class based on the environment.
+
+    Args:
+        environment: The environment name ('development', 'testing', 'production').
+
+    Returns:
+        The configuration class.
+    """
+    if environment == 'development':
+        from app.config.dev_config import DevConfig
+        return DevConfig
+    elif environment == 'testing':
+        from app.config.testing_config import TestingConfig
+        return TestingConfig
+    elif environment == 'production':
+        from app.config.prod_config import ProdConfig
+        return ProdConfig
+    else:
+        raise ValueError(f"Invalid environment: {environment}")
 
 def configure_logging(app):
     # Create a formatter
-    formatter = "[%(asctime)s] [%(levelname)s] [%(message)s]"
+    formatter = logging.Formatter("[%(asctime)s] [%(levelname)s] [%(message)s]")
 
-    # Register root logging
-    logging.basicConfig(
-        level=logging.DEBUG,
-        format=formatter,
-        handlers=[
-            RotatingFileHandler("./logs/flask.log", maxBytes=1048576, backupCount=5)
-        ],
-    )
+    # Create a file handler
+    file_handler = logging.FileHandler("logs/flask.log")
+    file_handler.setLevel(logging.DEBUG)
+    file_handler.setFormatter(formatter)
 
-    # Add a StreamHandler for development mode
-    if app.debug:
-        stream_handler = logging.StreamHandler()
-        stream_handler.setLevel(logging.DEBUG)
-        stream_handler.setFormatter(formatter)
-        logging.getLogger().addHandler(stream_handler)
+    # Set the file handler for the root logger
+    root_logger = logging.getLogger()
+    root_logger.setLevel(logging.DEBUG)
+    root_logger.addHandler(file_handler)
 
+    # Set the level for werkzeug logger
     logging.getLogger("werkzeug").setLevel(logging.INFO)
 
 
@@ -72,7 +87,7 @@ def register_filters(app):
     app.jinja_env.filters["get_pretty_date"] = get_pretty_date
 
 
-def create_app(config_class):
+def create_app(environment):
     """Creates a Flask application.
     Args:
         config_class: The class that defines the Flask application's configuration.
@@ -82,14 +97,17 @@ def create_app(config_class):
     """
     app = Flask(__name__)
     configure_logging(app)
+    config_class = get_config_class(environment)
     app.config.from_object(config_class)
     app.logger.info(f"Creating app with config: {config_class.__name__}")
     register_filters(app)
 
+    print("PIZZA")
+
     db.init_app(app)
     bcrypt.init_app(app)
     login_manager.init_app(app)
-    login_manager.login_view = "users.login"
+    login_manager.login_view = "users.login" # type: ignore
     migrate.init_app(app, db)
     limiter.init_app(app)
     redis_client.init_app(app)

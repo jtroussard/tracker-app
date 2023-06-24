@@ -2,8 +2,12 @@ class DevConfig:
     ENV = "development"
     DEBUG = True
     PORT = 12031
+    SERVER_NAME = 'localhost:12031'
     TESTING = False
-    SQLALCHEMY_DATABASE_URI = "postgresql://coco:password@localhost:5432/mydatabase"
+    SQLALCHEMY_DATABASE_URI = "postgresql://lester:green@database_tracker:5432/dockertestdb"
+    DB_USERNAME = "lester"
+    DB_PASSWORD = "green"
+    DB_NAME = "dockertestdb"
     SECRET_KEY = "dslfjadsfkjldsa"
     REDIS_HOST = "localhost"
     REDIS_PORT = 6379
